@@ -1,0 +1,15 @@
+/.idea
+/gear/apps/Element/
+/gear/apps/Test/
+/gear/apps/Mifs/
+/gear/apps/Oa/
+/gear/runtime/
+/gear/src/plugins/envCheck/lock
+/gear/src/plugins/arrayDb/db/
+/gear/src/plugins/encrypt/config.php
+/gear/apps/Gear/others/codeTest.php
+/public/plugin/ueditor/upload/
+/public/apps/mifs/
+/public/apps/Oa/
+/public/common/element-ui/
+/public/apps/Element/
