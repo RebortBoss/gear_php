@@ -2160,10 +2160,12 @@ class Yuri2
     /**
      * 获取Bing每日壁纸和故事
      * @author giuem
+     * @param $size array [1920,1080] 尺寸
      * @return array|bool 返回关联数组[url,date,title,content],网络不通返回false
      */
-    public static function bingImgFetch()
+    public static function bingImgFetch($size=[1920,1080])
     {
+        $size=implode('x',$size);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1');
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -2179,7 +2181,7 @@ class Yuri2
         $re2 = json_decode(file_get_contents('http://cn.bing.com/cnhp/coverstory/'), 1);//移动版返回内容
         return array(
             /* 更改图片尺寸，减小体积 */
-            'url' => 'http://www.bing.com' . $re['images'][0]['url'],
+            'url' => 'http://www.bing.com'.str_replace('1920x1080',$size,$re['images'][0]['url']),
             /* 结束日期 */
             'date' => date('j', strtotime($re['images'][0]['enddate'])),
             /* 故事标题 */

@@ -15,7 +15,7 @@ if (function_exists('mb_internal_encoding')) {
 require PATH_GEAR . '/configs/defines.php'; // 读取常量表
 
 //加载配置表
-$configs = require PATH_CONFIG . '/config.php';
+$configs = require PATH_CONFIG . '/global.php';
 $obj = new Config();
 $obj->configs = $configs;
 Factory::addRecipe('config', function () use ($obj) {
