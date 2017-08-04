@@ -84,8 +84,8 @@
                 <div class="title"><?= lang("代码测试","Code Test") ?></div>
             </div>
             <div class="shortcut"
-                 onclick="Win10.openUrl('<?= url_based('tools/webShell') ?>','<img class=\'icon\' src=\'__PUBLIC__/apps/Gear/img/icon/webshell.png\' />WebShell')">
-                <img class="icon" src="__PUBLIC__/apps/Gear/img/icon/webshell.png"/>
+                 onclick="Win10.openUrl('<?= url_based('tools/webShell') ?>','<img class=\'icon\' src=\'__PUBLIC__/apps/Gear/img/icon/webShell.png\' />WebShell')">
+                <img class="icon" src="__PUBLIC__/apps/Gear/img/icon/webShell.png"/>
                 <div class="title">WebShell</div>
             </div>
             <div class="shortcut"
