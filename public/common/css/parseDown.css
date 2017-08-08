@@ -1,0 +1,85 @@
+.parse-down{
+    padding: 1em;
+    margin: 0;
+    width: calc(100% - 2em);
+    height:100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-arrow-color: #5e6a5c;);  /*图6,三角箭头的颜色*/
+    scrollbar-face-color: #5e6a5c;  /*图5,立体滚动条的颜色*/
+    scrollbar-3dlight-color: #5e6a5c;  /*图1,立体滚动条亮边的颜色*/
+    scrollbar-highlight-color: #5e6a5c;  /*图2,滚动条空白部分的颜色*/
+    scrollbar-shadow-color: #5e6a5c;  /*图3,立体滚动条阴影的颜色*/
+    scrollbar-darkshadow-color: #5e6a5c; /*图4,立体滚动条强阴影的颜色*/
+    scrollbar-track-color: rgba(74, 84, 78, 0.41);  /*图7,立体滚动条背景颜色*/
+    scrollbar-base-color:#5e6a5c;  /*滚动条的基本颜色*/
+}
+.parse-down::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+}
+.parse-down::-webkit-scrollbar-track {
+    background-color: #808080;
+}
+.parse-down::-webkit-scrollbar-thumb {
+    background-color: rgba(30, 39, 34, 0.81);
+}
+
+.parse-down * {
+    font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu
+}
+.parse-down a{
+    text-decoration: none;
+}
+.parse-down h1,h2{
+    border-bottom: 1px solid #eee;
+}
+.parse-down img{
+    max-width: 100%;
+}
+.parse-down blockquote{
+    background-color: #f5f5f5;
+    border-left:0.3em solid #afafaf;
+    line-height: 1.7em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1em;
+    font-size: 16px;
+}
+.parse-down code{
+    background: #f6f6f6;
+    padding: 3px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+.parse-down pre{
+    background-color: #f5f5f5;
+    margin-left: 0;
+    margin-right: 0;
+    line-height: 1.5em;
+    font-size: 0.8em;
+    overflow: auto;
+}
+.parse-down li{
+    line-height:1.7em;
+    color: #343434;
+}
+.parse-down table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: block;
+    width: 100%;
+    overflow: auto;
+    margin: 1em;
+}
+.parse-down table tr{
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+}
+.parse-down table thead tr ,.parse-down table tr:nth-child(2n){
+    background-color: #f8f8f8;
+}
+.parse-down table th,.parse-down table td{
+    padding: 6px 14px;
+    border: 1px solid #ddd;
+}

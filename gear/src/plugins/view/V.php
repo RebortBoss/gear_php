@@ -8,6 +8,59 @@
 
 class V
 {
+    //常用html资源导入
+    public static function import_js_jquery(){return self::import('common/js/'.(Yuri2::isOldIE()?'jquery-1.11.3.min.js':'jquery-2.2.4.min.js'));}
+    public static function import_js_jquery_JSONP(){return self::import('common/js/jquery.jsonp.js');}
+    public static function import_js_jquery_mouse_wheel(){return self::import('common/js/jqueryMousewheel.js');}
+    public static function import_js_yuri2(){return self::import('common/js/Yuri2.js');}
+    public static function import_js_lock(){return self::import('common/js/lock_IndreamLuo.js');}
+    public static function import_js_thread(){return self::import('common/js/Concurrent.Thread.js');}
+    public static function import_js_gravity_shadow(){return self::import('common/js/gravityShadow.js');}
+    public static function import_js_vue(){return self::import('common/js/vue.min.js');}
+    public static function import_css_animated(){return self::import('common/css/animate.css');}
+    public static function import_css_grid(){return self::import('common/css/grid.css');}
+    public static function import_css_parse_down(){return self::import('common/css/parseDown.css');}
+    public static function import_css_font_awesome(){return self::import('common/font-awesome-4.7.0/css/font-awesome.min.css');}
+    public static function import_rs_bootstrap3(){
+        return self::import('common/bootstrap3/js/bootstrap.min.js')
+             . self::import('common/bootstrap3/css/bootstrap.min.css');
+    }
+    public static function import_rs_element_ui(){
+        return self::import('common/element-ui/themes/default.css')
+             . self::import('common/element-ui/themes/default/color.css')
+             . self::import('common/element-ui/element.js');
+    }
+    public static function import_rs_jq_ui(){
+        return self::import('common/jquery-ui-1.12.1/jquery-ui.theme.css')
+             . self::import('common/jquery-ui-1.12.1/jquery-ui.min.css')
+             . self::import('common/jquery-ui-1.12.1/jquery-ui.js');
+    }
+    public static function import_rs_ie9_fix(){
+        return self::import('common/js/html5shiv-3.7.2-html5shiv.min.js')
+             . self::import('common/js/respond.js-1.4.2-respond.min.js');
+    }
+    public static function import_rs_context_menu(){
+        return self::import('common/contextMenu/src/contextMenu.js')
+             . self::import('common/contextMenu/src/contextMenu.css');
+    }
+    public static function import_rs_code_mirror(){
+        return self::import('common/codemirror-5.2/lib/codemirror.css')
+             . self::import('common/codemirror-5.2/lib/codemirror.js')
+             . self::import('common/codemirror-5.2/addon/edit/matchbrackets.js')
+             . self::import('common/codemirror-5.2/mode/htmlmixed/htmlmixed.js')
+             . self::import('common/codemirror-5.2/mode/xml/xml.js')
+             . self::import('common/codemirror-5.2/mode/javascript/javascript.js')
+             . self::import('common/codemirror-5.2/mode/css/css.js')
+             . self::import('common/codemirror-5.2/mode/clike/clike.js')
+             . self::import('common/codemirror-5.2/mode/php/php.js');
+    }
+    public static function import_rs_editor_markdown(){
+        return self::import('common/simplemde-markdown-editor/dist/simplemde.min.css')
+             . self::import('common/simplemde-markdown-editor/dist/simplemde.min.js');
+    }
+    public static function import_rs_layer(){return self::import('common/layer-v3.0.3/layer/layer.js');}
+
+
     /** 辅助方法 ---------------------------------------------------- */
 
     /**
@@ -29,6 +82,7 @@ class V
      * @param $var mixed 变量
      * @param $filter string 过滤器
      * @param $default string 默认值
+     * @deprecated
      * @return string
      */
     public static function displayVar(&$var,$default='',$filter='|e'){
@@ -54,21 +108,23 @@ class V
      */
     public static function import($res_html)
     {
-        if ($res_html{0} != '/') {
-            $res_html = '/' . $res_html;
+        if(!preg_match('/^https?:\/\//i',$res_html)){
+            if ($res_html{0} != '/') {
+                $res_html = '/' . $res_html;
+            }
+            $res_html = URL_PUBLIC . $res_html;
         }
         $ext = \Yuri2::getExtension($res_html);
-        $href = URL_PUBLIC . $res_html;
         $rel='';
         switch ($ext){
             case 'ico':
-                $rel="<link rel = 'Shortcut Icon'  type='image/x-icon' href='$href' >";
+                $rel="<link rel = 'Shortcut Icon'  type='image/x-icon' href='$res_html' >";
                 break;
             case 'js':
-                $rel="<script type='text/javascript' src='$href' ></script>";
+                $rel="<script type='text/javascript' src='$res_html' ></script>";
                 break;
             case 'css':
-                $rel="<link rel='stylesheet' type='text/css' href='$href' >";
+                $rel="<link rel='stylesheet' type='text/css' href='$res_html' >";
                 break;
         }
         $rel.=RN;
@@ -130,6 +186,7 @@ class V
      * 更聪明的echo
      * @param $var mixed
      * @param $filters string 过滤器
+     * @deprecated
      * @return string
      */
     public static function smarterEcho($var,$filters='|e'){

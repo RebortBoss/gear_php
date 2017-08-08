@@ -64,9 +64,9 @@ class Format
      * @return string
      * @author yuri2
      */
-    public function arrayToJson($arr,$options = 0)
+    public function arrayToJson($arr, $options = 0)
     {
-        return \json_encode($arr,$options);
+        return \json_encode($arr, $options);
     }
 
     /**
@@ -85,7 +85,8 @@ class Format
      * @param  string $CamelCase
      * @return string
      */
-    public function camelToHyphen($CamelCase){
+    public function camelToHyphen($CamelCase)
+    {
         return \Yuri2::Camel_to_Hyphen($CamelCase);
     }
 
@@ -106,9 +107,9 @@ class Format
      * @param $uc_first bool 是否大写开头
      * @return string
      */
-    public function hyphenToCamel ($str , $uc_first = true)
+    public function hyphenToCamel($str, $uc_first = true)
     {
-        return \Yuri2::Hyphen_to_Camel($str,$uc_first);
+        return \Yuri2::Hyphen_to_Camel($str, $uc_first);
     }
 
     /**
@@ -170,82 +171,15 @@ class Format
      */
     public function subStr($str, $start = 0, $length, $charset = "utf-8")
     {
-        return \Yuri2::subStr($str, $start , $length, $charset);
+        return \Yuri2::subStr($str, $start, $length, $charset);
     }
 
     /** md格式转html */
-    public function mdToHtml($md){
-        $style = <<<EOT
-        
-<style>
-        .parse-down{
-            padding: 1em;
-            margin: 0;
-            width: calc(100% - 2em);
-            height:100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            scrollbar-arrow-color: #5e6a5c;);  /*图6,三角箭头的颜色*/
-            scrollbar-face-color: #5e6a5c;  /*图5,立体滚动条的颜色*/
-            scrollbar-3dlight-color: #5e6a5c;  /*图1,立体滚动条亮边的颜色*/
-            scrollbar-highlight-color: #5e6a5c;  /*图2,滚动条空白部分的颜色*/
-            scrollbar-shadow-color: #5e6a5c;  /*图3,立体滚动条阴影的颜色*/
-            scrollbar-darkshadow-color: #5e6a5c; /*图4,立体滚动条强阴影的颜色*/
-            scrollbar-track-color: rgba(74, 84, 78, 0.41);  /*图7,立体滚动条背景颜色*/
-            scrollbar-base-color:#5e6a5c;  /*滚动条的基本颜色*/
-        }
-        .parse-down::-webkit-scrollbar{
-            width: 8px;
-            height: 8px;
-        }
-        .parse-down::-webkit-scrollbar-track {
-            background-color: #808080;
-        }
-        .parse-down::-webkit-scrollbar-thumb {
-            background-color: rgba(30, 39, 34, 0.81);
-        }
-
-        
-        .parse-down * {
-            font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu
-        }
-        .parse-down a{
-            text-decoration: none;
-        }
-        .parse-down h1,h2{
-            border-bottom: 1px solid #eee;
-        }
-        .parse-down img{
-            max-width: 100%;
-        }
-        .parse-down blockquote{
-            background-color: #f5f5f5;
-            border-left:0.3em solid #afafaf;
-            line-height: 1.7em;
-            margin-left: 0;
-            margin-right: 0;
-            padding-left: 1em;
-            font-size: 16px;
-        }
-        .parse-down pre{
-            background-color: #f5f5f5;
-            margin-left: 0;
-            margin-right: 0;
-            line-height: 1.5em;
-            font-size: 0.8em;
-            overflow: auto;
-        }
-        .parse-down li{
-            line-height:1.7em;
-            color: #343434;
-        }
-    </style>
-
-EOT;
-
+    public function mdToHtml($md)
+    {
         $p = new Parsedown();
         $html = $p->text($md);
-        return "$style <div class='parse-down'>$html</div>";
+        return "<div class='parse-down'>$html</div>";
     }
 
     /**
@@ -254,11 +188,12 @@ EOT;
      * @param $name_id string
      * @return array
      */
-    public function arrayIndexToAssoc($rows,$name_id){
-        $rel=[];
-        foreach ($rows as $row){
-            if (isset($row[$name_id])){
-                $rel[$row[$name_id]]=$row;
+    public function arrayIndexToAssoc($rows, $name_id)
+    {
+        $rel = [];
+        foreach ($rows as $row) {
+            if (isset($row[$name_id])) {
+                $rel[$row[$name_id]] = $row;
             }
         }
         return $rel;
@@ -269,10 +204,11 @@ EOT;
      * @param $file_excel string
      * @return array
      */
-    public function excelToRows($file_excel){
-        $file_excel=$this->autoSysCoding($file_excel);
-        $excelHelper=maker()->excel();
-        $cells=$excelHelper->loadFromFile($file_excel)->ObjToArray();
+    public function excelToRows($file_excel)
+    {
+        $file_excel = $this->autoSysCoding($file_excel);
+        $excelHelper = maker()->excel();
+        $cells = $excelHelper->loadFromFile($file_excel)->ObjToArray();
         return $cells;
     }
 
@@ -282,32 +218,33 @@ EOT;
      * @param $file string 全路径表示保存，否则表示浏览器下载(默认)
      * @return string
      */
-    public function rowsToExcel($rows,$file='data.xlsx'){
-        $excelHelper=maker()->excel();
-        $excelObj=$excelHelper->getExcelObj();
-        $sheet=$excelObj->setActiveSheetIndex(0);
-        $y=1;
-        foreach ($rows as $index=>$row){
-            $x=1;
-            foreach ($row as $col=>$val){
-                $sheet->setCellValue($excelHelper->coordinateToCell($x,$y),$val);
+    public function rowsToExcel($rows, $file = 'data.xlsx')
+    {
+        $excelHelper = maker()->excel();
+        $excelObj = $excelHelper->getExcelObj();
+        $sheet = $excelObj->setActiveSheetIndex(0);
+        $y = 1;
+        foreach ($rows as $index => $row) {
+            $x = 1;
+            foreach ($row as $col => $val) {
+                $sheet->setCellValue($excelHelper->coordinateToCell($x, $y), $val);
                 $x++;
             }
             $y++;
         }
-        $ext=\Yuri2::getExtension($file);
-        if ($ext==''){
-            $file.='.xlsx';
+        $ext = \Yuri2::getExtension($file);
+        if ($ext == '') {
+            $file .= '.xlsx';
         }
 
         //判断是否全路径
-        if(strpos($file,'/') or strpos($file,'\\')){
+        if (strpos($file, '/') or strpos($file, '\\')) {
             //全路径
             maker()->file()->createDir(dirname($file));
-            $file=$this->autoSysCoding($file);
+            $file = $this->autoSysCoding($file);
             $excelHelper->saveFile($file);
             return $this->autoEncoding($file);
-        }else{
+        } else {
             //下载
             $excelHelper->downloadFile($file);
             return $file;

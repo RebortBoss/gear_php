@@ -31,7 +31,7 @@
                 <textarea id="code" name="code"><?=V::displayVar($code,'','no')?></textarea>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <iframe id="ifrm" src="<?=url(url_info('',['action'=>'preview']),['codeTestRand'=>''])?>"></iframe>
+                <iframe id="ifrm" src="<?=url(url_info('',['action'=>'preview']))?>"></iframe>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
             $('#btn_save_scratch').click(function () {
                 var scratch=$("#scratch").val();
                 $.post('<?=url(url_info('',['action'=>'scratch']))?>',{scratch:scratch},function (data) {
-                    if (data.state=='success'){
+                    if (data.state==='success'){
                         Gear.log('Save completed.')
                     }else{
                         alert(data.msg);
