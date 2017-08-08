@@ -68,7 +68,7 @@
                 var scratch=$("#scratch").val();
                 $.post('<?=url(url_info('',['action'=>'scratch']))?>',{scratch:scratch},function (data) {
                     if (data.state==='success'){
-                        Gear.log('Save completed.')
+                        Yuri2.log('Save completed.')
                     }else{
                         alert(data.msg);
                     }
@@ -78,7 +78,7 @@
                 var code=editor.getValue();
                 $.post('<?=url(url_info('',['action'=>'save']))?>',{code:code},function (data) {
                     if (data.state==='success'){
-                        Gear.log('Save completed.')
+                        Yuri2.log('Save completed.')
                     }else{
                         alert(data.msg);
                     }

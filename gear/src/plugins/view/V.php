@@ -17,6 +17,7 @@ class V
     public static function import_js_thread(){return self::import('common/js/Concurrent.Thread.js');}
     public static function import_js_gravity_shadow(){return self::import('common/js/gravityShadow.js');}
     public static function import_js_vue(){return self::import('common/js/vue.min.js');}
+    public static function import_js_marked(){return self::import('common/js/marked.js');}
     public static function import_css_animated(){return self::import('common/css/animate.css');}
     public static function import_css_grid(){return self::import('common/css/grid.css');}
     public static function import_css_parse_down(){return self::import('common/css/parseDown.css');}
@@ -54,7 +55,14 @@ class V
              . self::import('common/codemirror-5.2/mode/clike/clike.js')
              . self::import('common/codemirror-5.2/mode/php/php.js');
     }
-    public static function import_rs_editor_markdown(){
+
+    /**
+     *      new SimpleMDE({
+     *          element:$('#t1')[0],
+     *          autoDownloadFontAwesome:false,
+     *      })
+     */
+    public static function import_rs_simpleMDE(){
         return self::import('common/simplemde-markdown-editor/dist/simplemde.min.css')
              . self::import('common/simplemde-markdown-editor/dist/simplemde.min.js');
     }
@@ -82,7 +90,7 @@ class V
      * @param $var mixed 变量
      * @param $filter string 过滤器
      * @param $default string 默认值
-     * @deprecated
+     * @deprecated use val() instead
      * @return string
      */
     public static function displayVar(&$var,$default='',$filter='|e'){
@@ -186,7 +194,7 @@ class V
      * 更聪明的echo
      * @param $var mixed
      * @param $filters string 过滤器
-     * @deprecated
+     * @deprecated use val() instead
      * @return string
      */
     public static function smarterEcho($var,$filters='|e'){

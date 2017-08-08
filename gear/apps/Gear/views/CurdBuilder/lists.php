@@ -248,7 +248,7 @@
                                 Model.vue.msg = 'Error.';
                             }
                         });
-                        Gear.log('Data updated.');
+                        Yuri2.log('Data updated.');
                     },
                     select: function () {
                         Model.config.con_col = Model.vue.con_col;
@@ -265,11 +265,11 @@
                                 data: {'id':id},
                                 dataType: 'json',
                                 success: function () {
-                                    Gear.log(id+' has been deleted.');
+                                    Yuri2.log(id+' has been deleted.');
                                     Model.vue.flash();
                                 },
                                 error: function () {
-                                    Gear.log(id+' was not deleted.');
+                                    Yuri2.log(id+' was not deleted.');
                                 }
                             });
                         }
@@ -300,12 +300,12 @@
                             }
                             return keys;
                         }
-                        Gear.log(this.all_selected);
+                        Yuri2.log(this.all_selected);
                         this.checked_rows=this.all_selected?getRowsIDs(this.rows):[];
                     },
                     export_excel:function () {
                         if (confirm('确认导出当前页数据?\r\nAre you sure want  to export the data from this page?')){
-                            Gear.submitForm('<?=url_based('export')?>',Model.config);
+                            Yuri2.submitForm('<?=url_based('export')?>',Model.config);
                         }
                     },
                     timestampToDate:function (timestamp) {

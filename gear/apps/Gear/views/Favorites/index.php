@@ -95,7 +95,7 @@
                     $('#ipt_title').val(data.data);
                 },
                 error: function (a) {
-                    Gear.log('Sorry,ajax request failed.');
+                    Yuri2.log('Sorry,ajax request failed.');
                     Yuri2.log(a.responseText);
                 }
             });

@@ -272,7 +272,7 @@ var Yuri2 = {
                 if (obj instanceof Array) {
                     o = [];
                     for (var i = 0, len = obj.length; i < len; i++) {
-                        o.push(Gear.clone(obj[i]));
+                        o.push(Yuri2.clone(obj[i]));
                     }
                 } else {
                     o = {};
@@ -317,7 +317,7 @@ var Yuri2 = {
                 recursion === true &&
                 typeof ( resultJsonObject[attr]) === 'object' &&
                 typeof ( jsonObject2[attr]) === 'object' ?
-                    Gear.jsonMerge(resultJsonObject[attr], jsonObject2[attr], false) : jsonObject2[attr];
+                    Yuri2.jsonMerge(resultJsonObject[attr], jsonObject2[attr], false) : jsonObject2[attr];
         }
         return resultJsonObject;
     },

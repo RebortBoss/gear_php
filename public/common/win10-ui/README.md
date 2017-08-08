@@ -10,7 +10,7 @@ Win10-ui是一款win10风格的后台UI，让您轻松搭建一个别具一格�
 
 ## 版本
 
-v1.1.170802
+v1.1.170805
 
 >v1.1上线啦，涉及到API级别的修改，v1.0的小伙伴们请仔细阅读文档和DEMO平稳过渡
 
@@ -107,7 +107,7 @@ v1.1.170802
 > 所有方法都需要加``Win10.``前缀。
 
 * setBgUrl(bgs) 设置背景图片 ``Win10.setBgUrl({main:'宽屏壁纸url',mobile:'竖屏壁纸url',})``
-* openUrl(url,title,max) ** 打开一个子窗口,参数列表：url,标题，是否默认最大化
+* openUrl(url,title,areaAndOffset) ** 打开一个子窗口,参数列表：url,标题，[区域,尺寸]\(同layer的area和offset的设置格式，也可以传入'max'强制最大化\)
 * onReady(handle) win10-ui初始化完毕后的回调
 * menuOpen() 开始菜单打开
 * menuClose() 开始菜单关闭
@@ -237,6 +237,8 @@ Win10.setContextMenu('#win10',true);
 
 ## 更新日志
 
+* 2017/8/05 [增强]openUrl函数现在第三个参数可以自定义窗口的打开大小和位置了！
+* 2017/8/05 [微调]win10.child.js增加了常用函数openUrl,父级对象句柄由Win10改名为Win10_parent;增加了一个紫色的css;优化内存释放
 * 2017/8/02 [增强]右键菜单
 * 2017/7/31 [增强]iframe子页js工具集
 * 2017/7/31 [精简]去除了登录相关的API，登录页现在作为独立模板存在
