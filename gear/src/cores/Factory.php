@@ -45,7 +45,7 @@ namespace src\cores;
  * @method \src\plugins\webSocket\Server webSocketServer(string $host = 'localhost',int $port = 8000, bool $ssl = false) 获取Server对象
  * @method \src\plugins\webSocket\client webSocketClient() 获取Client对象
  * @method \src\plugins\factory\libs\NeuralNetwork neuralNetwork(array $nodeCount) 获取NeuralNetwork对象
- * @method \src\plugins\email\Email email(string|array $count='default') 获取Email对象(传入配置名或配置数组)
+ * @method \src\plugins\email\Email email(string|array $account='default') 获取Email对象(传入配置名或配置数组)
  */
 class Factory
 {

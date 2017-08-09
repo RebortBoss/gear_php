@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'version' => 1,
-    'requires'=>[
-
-    ],
     'configs'=>[
         'type'=>'file',
         'gc_probability'=>0.02,

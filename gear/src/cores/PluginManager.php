@@ -23,30 +23,56 @@ class PluginManager
 
 
 
-    /** 加载插件 */
-    public static function initPlugins(){
+    /** 加载全局插件 */
+    public static function initPluginsGlobal(){
         self::$plugin_configs_file=PATH_CONFIG.'/plugins.php';
         $configs=require self::$plugin_configs_file;
         self::$plugin_configs=$configs;
         foreach (self::$plugin_configs as $index =>$plugin_name){
-            Event::fire(self::EVENT_BEFORE_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
-            $class_name="\\src\\plugins\\$plugin_name\\Main";
-            if (class_exists($class_name)){
-                /** @var  $plugin Plugin*/
-                $plugin=new $class_name();
-                $ret=$plugin->main();
-                if ($ret===true){
-                    //初始化成功
-                    self::$objs[$plugin_name]=$plugin; //存储插件对象
-                    Event::fire(self::EVENT_AFTER_PLUGIN_INIT.$plugin_name,new Event(['plugin_name'=>$plugin_name]));
-                }else{
-                    //初始化失败
-                    trigger_error($plugin_name.self::LANG_ERROR_PLUGIN_INIT_FAILED,E_USER_ERROR);
-                }
-                Event::fire(self::EVENT_AFTER_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
-            }else{
-                trigger_error($plugin_name.self::LANG_ERROR_PLUGIN_INIT_MISSING_MAIN_CLASS.':'.$class_name,E_USER_ERROR);
+            self::initPlugin($plugin_name);
+        }
+    }
+
+    /** 加载模块插件 */
+    public static function initPluginsFromArray($plugin_arr){
+        foreach ($plugin_arr as $k=>$v){
+            if(is_numeric($k)&&is_string($v)&&!PluginManager::getPlugin($v)){
+                PluginManager::initPlugin($v);
             }
+            if (is_array($v) ){
+                $plugin=PluginManager::getPlugin($k);
+                if(!$plugin){
+                    PluginManager::initPlugin($k);
+                    $plugin=PluginManager::getPlugin($k);
+                }
+                $configs=$v;
+                $old_plugin_configs=$plugin->get('configs');
+                if (is_array($old_plugin_configs)){
+                    $configs=array_merge($old_plugin_configs,$v);
+                }
+                $plugin->set('configs',$configs);
+            }
+        }
+    }
+
+    public static function initPlugin($plugin_name){
+        Event::fire(self::EVENT_BEFORE_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
+        $class_name="\\src\\plugins\\$plugin_name\\Main";
+        if (class_exists($class_name)){
+            /** @var  $plugin Plugin*/
+            $plugin=new $class_name();
+            $ret=$plugin->main();
+            if ($ret===true){
+                //初始化成功
+                self::$objs[$plugin_name]=$plugin; //存储插件对象
+                Event::fire(self::EVENT_AFTER_PLUGIN_INIT.$plugin_name,new Event(['plugin_name'=>$plugin_name]));
+            }else{
+                //初始化失败
+                trigger_error($plugin_name.self::LANG_ERROR_PLUGIN_INIT_FAILED,E_USER_ERROR);
+            }
+            Event::fire(self::EVENT_AFTER_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
+        }else{
+            trigger_error($plugin_name.self::LANG_ERROR_PLUGIN_INIT_MISSING_MAIN_CLASS.':'.$class_name,E_USER_ERROR);
         }
     }
 
@@ -59,11 +85,7 @@ class PluginManager
         if (is_null($name)){
             return array_keys(self::$objs);
         }
-        if (isset(self::$objs[$name])){
-            return self::$objs[$name];
-        }else{
-            return null;
-        }
+        return isset(self::$objs[$name])?self::$objs[$name]:null;
     }
 
 }

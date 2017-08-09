@@ -97,7 +97,7 @@ class Main
     /** 初始化插件表 */
     private function initPlugins()
     {
-        PluginManager::initPlugins();
+        PluginManager::initPluginsGlobal();
     }
 
     /** 注册系统事件 */

@@ -19,8 +19,8 @@ class Main extends Plugin
     {
         $self=$this;
         Event::addListener(Factory::EVENT_NEED_RECIPE.'email',function () use ($self) {
-            Factory::addRecipe('email', function ($count='default') use ($self) {
-                $obj = new Email(is_string($count)?$self->configs[$count]:$count);
+            Factory::addRecipe('email', function ($account='default') use ($self) {
+                $obj = new Email(is_string($account)?$self->configs[$account]:$account);
                 return $obj;
             });
         });
@@ -28,7 +28,7 @@ class Main extends Plugin
         //注册开发者错误提示邮箱
         Event::addListener(\src\cores\Main::EVENT_ON_SHUTDOWN,function () use ($self){
             $err_num=count(ErrorCatch::getErrors());
-            if($self->enable_error_attention && $err_num>0){
+            if($self->configs['enable_error_attention'] && $err_num>0){
                 //检查是否位于发送邮件的冷却期
 
                 $time_now=time();
@@ -39,7 +39,7 @@ class Main extends Plugin
                     $cool_down=$time_now+3600*12;
                     $cool_down_date=date('Y/m/d H:i:s',$cool_down);
                     $restore_cool_down_url=url('plugin/email',['action'=>'restore_cool_down','token'=>order_token()]);
-                    maker()->email($self->error_attention)->send(
+                    maker()->email($self->configs['error_attention'])->send(
                         lang('您的GearPHP项目中产生了错误!','Some Errors Has Occurred in GearPHP Projects!'),
                         "
 <p>[ID] ".ID."</p>

@@ -25,7 +25,7 @@ Factory::addRecipe('config', function () use ($obj) {
 
 require PATH_SRC . '/funcs/helperCore.php'; //助手函数
 date_default_timezone_set(config(Config::TIMEZONE));//设置时区
-PluginManager::initPlugins();    /** 初始化插件表 */
+PluginManager::initPluginsGlobal();    /** 初始化插件表 */
 
 const CIL_EVENT_START = 'EVENT_START';
 const CIL_EVENT_ON_SHUTDOWN = 'EVENT_ON_SHUTDOWN';

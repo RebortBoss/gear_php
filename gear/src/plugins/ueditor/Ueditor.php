@@ -244,7 +244,7 @@ class Ueditor
         }
         $config = [
             'toolbars'=>$toolbars,
-            'serverUrl'=>url('plugin/ueditor', ['id' => $params['id']]),
+            'serverUrl'=>url('plugin/ueditor', ['id' => $params['id'],'token'=>order_token(3600*6,'ue')]),
             'initialFrameWidth'=>$params['width'],
             'initialFrameHeight'=>$params['height'],
         ];

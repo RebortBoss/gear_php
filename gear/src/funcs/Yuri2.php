@@ -2190,4 +2190,43 @@ class Yuri2
             'content' => $re2['para1']
         );
     }
+
+    /**
+     * 相对url转绝对url
+     * @author Guilyn
+     * @param $base string
+     * @param $url string
+     * @return string
+     */
+    public static function url_real($base,$url=''){
+        if(preg_match('/^\s*http(s?):\/\//i',$url)){
+            return $url;
+        }
+        $protocol='';
+        preg_match('/^\s*http(s?):\/\//i',$base,$matches);//识别协议头（Yuri2）
+        if($matches){
+            $protocol=$matches[1]?'https://':'http://';
+        }
+        if(preg_match("~^(magnet|thunder|flashget|[fht]+p):~",$url,$tmp)){
+            return $url;
+        }
+        $base=preg_replace("~/[^/]+\.\w+$~","",$base);//去掉最后一层 /xxx 相当于取父级
+        $base=preg_replace("~^\s*https?://|/\s*$~","",$base); //去掉协议头
+        $roads=preg_split("~/~",$base); //分割
+        $host=$roads[0];
+        if(preg_match("~^/~",$url,$tmp)){
+            return "$protocol$host$url";
+        }
+        $up=preg_match_all("~(\.\./)~",$url,$tmp);
+        $up=$up>0?$up:0;
+        $roads=array_slice($roads,1);
+        $keep=count($roads)-($up>count($roads)?count($roads):$up);
+        $roads=array_slice($roads,0,$keep);
+        $roads=implode("/",$roads);
+        $paths=preg_replace("~^\./~","",$url);
+        $paths=preg_split("~/~",$paths);
+        $paths=array_slice($paths,$up,count($paths)-$up);
+        $paths=implode("/",$paths);
+        return $protocol."$host".($roads?"/$roads":"")."/$paths";
+    }
 }

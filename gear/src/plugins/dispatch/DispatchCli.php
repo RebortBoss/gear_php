@@ -119,18 +119,10 @@ class DispatchCli
         }
         if (is_file($file_plugin)) {
             $plugin_arr=require  $file_plugin;
-            foreach ($plugin_arr as $plugin_name=>$configs){
-                if ($plugin=PluginManager::getPlugin($plugin_name)){
-                    $old_plugin_configs=$plugin->get('configs');
-                    if (is_array($old_plugin_configs)){
-                        $configs=array_merge($old_plugin_configs,$configs);
-                    }
-                    $plugin->set('configs',$configs);
-                }
-            }
+            PluginManager::initPluginsFromArray($plugin_arr);
         }
 
-        \Yuri2::setErrorReportLevel(Config::ERROR_LOG_LV);
+        \Yuri2::setErrorReportLevel(Config::ERROR_LOG_LV); //CLI模式需要设置此项来屏蔽错误
 
         if (is_file($file_autoload)){
             require $file_autoload;

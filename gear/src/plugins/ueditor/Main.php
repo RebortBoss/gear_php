@@ -33,6 +33,7 @@ class Main extends Plugin
     {
         config('debug',false);
         config(Config::ERROR_LOG_LV,1);
+        check_token(request('token'),'ue') or die('Wrong access token!');
         require __DIR__.'/control/controller.php';
     }
 }
