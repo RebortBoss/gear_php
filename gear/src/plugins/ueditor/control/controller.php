@@ -7,6 +7,9 @@
 //$config = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", file_get_contents(__DIR__."/config.json")), true);
 $ID_ARTICLE=issetOrDefault($_GET['id'],'default');
 $CONFIG=require __DIR__.'/config.php';
+if(request('config')){
+    $CONFIG=array_merge($CONFIG,plugin('ueditor')->config[request('config')]);
+}
 $action = $_GET['action'];
 
 switch ($action) {

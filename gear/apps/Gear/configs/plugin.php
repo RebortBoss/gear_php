@@ -6,17 +6,5 @@
  * Time: 14:28
  */
 return [
-    'db' => [
-        'local' => [
-            'dsn' => 'mysql:host=localhost;dbname=test',
-            'usn' => 'root',
-            'psw' => 'root',
-            'convention' => [
-                'primary' => "id",// %s = table
-                'foreign' => "%s_id",
-                'table' => "%s",
-                'prefix' => ""
-            ]
-        ],
-    ],
+    'captcha',//验证码
 ];

@@ -10,6 +10,7 @@ namespace src\plugins\routeSpecial;
 
 
 use src\cores\Event;
+use src\cores\PluginManager;
 use src\plugins\route\Route;
 use src\traits\Plugin;
 
@@ -31,13 +32,8 @@ class Main extends Plugin
 
             //尝试识别路由为直接访问插件的direct方法
             if (preg_match('/^\/?plugin\/(\w+)$/',$info,$matches)){
-                if (plugin($matches[1])){
-                    maker()->cookie()->setPrefix('plugin');
-                    maker()->session()->setPrefix('plugin');
-                    plugin($matches[1])->direct();
-                }else{
-                    throw new \ErrorException(self::LANG_ERROR_ROUTE_SPECIAL_DIRECT_NOT_CALLABLE);
-                }
+                PluginManager::initPlugin($matches[1]);
+                plugin($matches[1])->direct();
                 exit();
             }else{
                 $rs=new RouteSpecial();
@@ -57,7 +53,7 @@ class Main extends Plugin
         return true;
     }
     /** 从路由直接访问的方法 */
-    public function direct()
-    {
+    public function direct(){
+
     }
 }

@@ -31,8 +31,9 @@ TODO
 
 [2017/8/9]
 
+ * public/plugin 改名为 public/plugins
  * 现在模块可以有独立加载插件的功能（大型插件可以在指定模块或指定时刻被加载了）
- * Ueditor的服务端url需要token验证了（自动）
+ * Ueditor的服务端url需要token验证了（自动）,优化了其api，支持传入参数来临时覆盖服务端配置
 
 [2017/8/8]
 

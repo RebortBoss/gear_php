@@ -204,10 +204,23 @@ class Ueditor
 
     public function getImportHtml()
     {
-        $prefix = URL_PUBLIC . '/plugin/ueditor';
+        $prefix = URL_PUBLIC . '/plugins/ueditor';
         return "
 <script type=\"text/javascript\" src='$prefix/ueditor.config.js'></script>
 <script type=\"text/javascript\" src='$prefix/ueditor.all.min.js'></script>
+<script type=\"text/javascript\" src='$prefix/ueditor.parse.min.js'></script>
+        ";
+    }
+    public function getImportHtmlEditorOnly(){
+        $prefix = URL_PUBLIC . '/plugins/ueditor';
+        return "
+<script type=\"text/javascript\" src='$prefix/ueditor.config.js'></script>
+<script type=\"text/javascript\" src='$prefix/ueditor.all.min.js'></script>
+        ";
+    }
+    public function getImportHtmlParseOnly(){
+        $prefix = URL_PUBLIC . '/plugins/ueditor';
+        return "
 <script type=\"text/javascript\" src='$prefix/ueditor.parse.min.js'></script>
         ";
     }
@@ -225,6 +238,7 @@ class Ueditor
             'toolbars'=>'normal',
             'width'=>'100%',
             'height'=>'160',
+            'config'=>'', //服务端配置项名（预先配置）
         ];
         $params=array_merge($params,$configs);
 
@@ -244,7 +258,7 @@ class Ueditor
         }
         $config = [
             'toolbars'=>$toolbars,
-            'serverUrl'=>url('plugin/ueditor', ['id' => $params['id'],'token'=>order_token(3600*6,'ue')]),
+            'serverUrl'=>url('plugin/ueditor', ['id' => $params['id'],'config'=>$params['config'],'token'=>order_token(3600*6,'ue')]),
             'initialFrameWidth'=>$params['width'],
             'initialFrameHeight'=>$params['height'],
         ];
@@ -260,7 +274,7 @@ class Ueditor
     }
 
     public function getParseHtml($cssSelector='.ueditor'){
-        $rpt=URL_PUBLIC.'/plugin/ueditor/';
+        $rpt=URL_PUBLIC.'/plugins/ueditor/';
         return "
             <script type=\"text/javascript\">
                 uParse('$cssSelector', {

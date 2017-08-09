@@ -1,6 +1,6 @@
 <?php
 
-namespace src\plugins\factory\libs;
+namespace src\plugins\neuralNetwork;
 
 /**
  * <b>Multi-layer Neural Network in PHP</b>

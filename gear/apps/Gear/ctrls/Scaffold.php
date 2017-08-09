@@ -26,6 +26,7 @@ class Scaffold extends Ctrl
                     \Yuri2::createDir($dir_module.'/ctrls');
                     \Yuri2::createDir($dir_module.'/views');
                     \Yuri2::createDir($dir_module.'/models');
+                    \Yuri2::createDir($dir_module.'/data');
                     \Yuri2::createDir($dir_module.'/others');
                     $file_autorun=$dir_module.'/configs/autorun.php';
                     $file_config=$dir_module.'/configs/global.php';

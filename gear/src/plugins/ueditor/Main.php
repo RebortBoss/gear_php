@@ -15,7 +15,7 @@ class Main extends Plugin
 
     protected function getConfigFilePath()
     {
-        return false;
+        return __DIR__.'/config.php';
     }
 
     public function main()

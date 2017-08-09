@@ -40,11 +40,8 @@ class PluginManager
                 PluginManager::initPlugin($v);
             }
             if (is_array($v) ){
+                PluginManager::initPlugin($k);
                 $plugin=PluginManager::getPlugin($k);
-                if(!$plugin){
-                    PluginManager::initPlugin($k);
-                    $plugin=PluginManager::getPlugin($k);
-                }
                 $configs=$v;
                 $old_plugin_configs=$plugin->get('configs');
                 if (is_array($old_plugin_configs)){
@@ -56,6 +53,7 @@ class PluginManager
     }
 
     public static function initPlugin($plugin_name){
+        if(self::getPlugin($plugin_name)){return;}
         Event::fire(self::EVENT_BEFORE_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
         $class_name="\\src\\plugins\\$plugin_name\\Main";
         if (class_exists($class_name)){

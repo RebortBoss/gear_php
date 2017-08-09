@@ -7,7 +7,7 @@ use src\cores\Event;
 use src\cores\Factory;
 use src\traits\Plugin;
 
-/** 插件模板 */
+/** 文件上传 */
 class Main extends Plugin
 {
     protected $configs = [];

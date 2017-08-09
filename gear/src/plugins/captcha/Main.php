@@ -28,7 +28,7 @@ class Main extends Plugin
         Event::addListener(Ctrl::EVENT_ON_CHECK_CAPTCHA, function (Event $event) {
             $s=maker()->session()->setPrefix('plugin.captcha');
             $code_last = $s['code'];
-            if (!function_exists('imagettftext') or strtolower($code_last) == strtolower($event['code']) and $event['code']!='') {
+            if (strtolower($code_last) == strtolower($event['code']) and $event['code']!='') {
                 $event['is_right']=true;
             }
             unset($s['code']);

@@ -1958,8 +1958,9 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                 {
                     var itemJ = matches[j];
 
-                    if (itemJ === null)
+                    if (itemJ === null){
 
+                    }
                     else if (itemJ.index > itemIEndPos)
                         break;
                     else if (itemJ.index == itemI.index && itemJ.length > itemI.length)

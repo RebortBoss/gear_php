@@ -34,12 +34,6 @@ class Main extends Plugin
                 return Traversable::from($from_array);
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'neuralNetwork', function () {
-            Factory::addRecipe('neuralNetwork', function ($nodeCount) {
-                $obj = new NeuralNetwork($nodeCount);
-                return $obj;
-            });
-        });
         Event::addListener(Factory::EVENT_NEED_RECIPE . 'cookie', function () {
             Factory::addRecipe('cookie', function () {
                 $obj = new Cookie();

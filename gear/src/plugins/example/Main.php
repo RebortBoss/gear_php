@@ -18,7 +18,7 @@ class Main extends Plugin
         $self=$this;
         Event::addListener(Factory::EVENT_NEED_RECIPE.'example',function () use ($self) {
             Factory::addRecipe('example', function () {
-                $obj = new PicMagic();
+                $obj = new Example();
                 return $obj;
             });
         });
