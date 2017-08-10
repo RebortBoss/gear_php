@@ -6,10 +6,10 @@
  * Time: 9:37
  */
 
-namespace src\plugins\upload;
+namespace src\plugins\uploader;
 
 
-class Upload
+class Uploader
 {
     private $path = '';          //上传文件保存的路径
     private $allowtype = array('jpg', 'gif', 'png'); //设置限制上传文件的类型

@@ -9,6 +9,8 @@
 namespace src\plugins\routeSpecial;
 
 
+use src\cores\Event;
+
 class RouteSpecial
 {
     private $res='';
@@ -23,6 +25,7 @@ class RouteSpecial
     }
 
     public function getAlias(){
+        $this->forbidFaviconRequest($this->res);
         foreach (self::$rules as $preg=>$closure){
             if (preg_match($preg,$this->res,$matches)){
                 $rel=call_user_func_array($closure,$matches);
@@ -33,4 +36,15 @@ class RouteSpecial
         }
         return $this->res;
     }
+
+    //屏蔽favicon的请求
+    private function forbidFaviconRequest($res){
+        $preg='/^\/?favicon.ico$/i';
+        if(preg_match($preg,$res)){
+            maker()->sender()->httpStateCode(404);
+            Event::freezeAll();
+            exit('Can not find favicon.ico on this server.');
+        }
+    }
+
 }

@@ -38,7 +38,7 @@ return [
 //    'ueditor',//ue富文本
 //    'weiChat',//微信公众号、企业号
 //    'qrCode',//二维码
-//    'upload',//上传
+//    'uploader',//上传
 //    'picMagic',//图片处理链接
 
 

@@ -32,7 +32,7 @@ namespace src\cores;
  * @method \src\plugins\factory\libs\Excel excel() 获取Excel对象
  * @method \src\plugins\factory\libs\Image image(string $img_file, int $status = 0) 获取Image对象
  * @method \src\plugins\ueditor\Ueditor ueditor() 获取Ueditor对象
- * @method \src\plugins\upload\Upload upload(string $path=null,array $allowtype=null,int $maxsize=null,bool $israndname=null) 获取Upload对象
+ * @method \src\plugins\uploader\Uploader uploader(string $path=null,array $allowtype=null,int $maxsize=null,bool $israndname=null) 获取Upload对象
  * @method \src\plugins\db\Db db(string $config_name='local',array $configs=[]) 获取Db对象
  * @method \Pinq\ITraversable pinq(array $from_array) 获取pinq对象
  * @method \src\plugins\factory\libs\Locker locker(string $name) 获取Lock对象

@@ -1,6 +1,6 @@
 <?php
 
-namespace src\plugins\upload;
+namespace src\plugins\uploader;
 
 
 use src\cores\Event;
@@ -16,9 +16,9 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'upload',function () use ($self) {
-            Factory::addRecipe('upload', function ($path=null, $allowtype=null,$maxsize=null, $israndname=null) use ($self) {
-                $obj = new Upload();
+        Event::addListener(Factory::EVENT_NEED_RECIPE.'uploader',function () use ($self) {
+            Factory::addRecipe('uploader', function ($path=null, $allowtype=null,$maxsize=null, $israndname=null) use ($self) {
+                $obj = new Uploader();
                 $obj->set('path',is_null($path)?$self->configs['path']:$path);
                 $obj->set('allowtype',is_null($allowtype)?$self->configs['allowtype']:$path);
                 $obj->set('maxsize',is_null($maxsize)?$self->configs['maxsize']:$path);

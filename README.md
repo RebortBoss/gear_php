@@ -29,6 +29,12 @@ TODO
 更新日志
 --------------------
 
+[2017/8/10]
+ 
+ * 修正二维码的缓存逻辑
+ * upload插件改名为uploader
+ * 屏蔽favicon的自动请求（特殊路由处）
+
 [2017/8/9]
 
  * public/plugin 改名为 public/plugins

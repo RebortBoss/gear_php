@@ -146,7 +146,7 @@ class CtrlCurd extends Ctrl
     public function import()
     {
         if (!$this->checkFormToken()){maker()->sender()->warning('请勿重复提交。Please do not submit duplicate');}
-        $up=maker()->upload();
+        $up=maker()->uploader();
         $up->set('allowtype',['xls','xlsx']);
         if($up -> upload("excel")) {
             $filename=$up->getFileFullPath();
