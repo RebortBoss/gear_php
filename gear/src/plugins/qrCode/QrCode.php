@@ -104,7 +104,7 @@ class QrCode
             'water'=>$this->water,
             'size'=>$this->size,
             'margin'=>$this->margin,
-            'is_cache'=>$this->margin?'yes':'no',
+            'is_cache'=>$this->is_cache?'yes':'no',
             'token'=>order_token($expire),
         ]);
         return $urlQr;

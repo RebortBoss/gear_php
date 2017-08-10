@@ -46,7 +46,7 @@ class Main extends Plugin
             $img_qr=maker()->image($file);
             Event::freezeAll();
             $img_qr->display();
-            if ($is_cache=='yes'){
+            if ($is_cache!=='yes'){
                 unlink($file);
             }
         }else{

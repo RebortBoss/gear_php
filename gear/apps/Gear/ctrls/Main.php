@@ -35,7 +35,8 @@ class Main extends Ctrl
         $readme=maker()->file()->readFile(PATH_ROOT.'/README.md');
         if(!$readme){$readme='';}
         $html=maker()->format()->mdToHtml($readme);
-        echo $html;
+        $this->assign('html', $html);
+        $this->render();
     }
 
     public function getDirSize(){
