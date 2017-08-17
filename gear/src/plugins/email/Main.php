@@ -18,7 +18,7 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'email',function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'email',function () use ($self) {
             Factory::addRecipe('email', function ($account='default') use ($self) {
                 $obj = new Email(is_string($account)?$self->configs[$account]:$account);
                 return $obj;
@@ -26,7 +26,7 @@ class Main extends Plugin
         });
 
         //注册开发者错误提示邮箱
-        Event::addListener(\src\cores\Main::EVENT_ON_SHUTDOWN,function () use ($self){
+        Event::bindListener(\src\cores\Main::EVENT_ON_SHUTDOWN,function () use ($self){
             $err_num=count(ErrorCatch::getErrors());
             if($self->configs['enable_error_attention'] && $err_num>0){
                 //检查是否位于发送邮件的冷却期

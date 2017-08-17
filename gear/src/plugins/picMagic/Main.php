@@ -20,7 +20,7 @@ class Main extends Plugin
     public function main()
     {
         PicMagic::setConfigs(['cacheDir' => PATH_RUNTIME . '/picMagic']);
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'picMagic', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'picMagic', function () {
             Factory::addRecipe('picMagic', function ($pic,$params) {
                 $obj = new PicMagic($pic,$params);
                 return $obj;

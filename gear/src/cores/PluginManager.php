@@ -54,7 +54,7 @@ class PluginManager
 
     public static function initPlugin($plugin_name){
         if(self::getPlugin($plugin_name)){return;}
-        Event::fire(self::EVENT_BEFORE_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
+        Event::trigger(self::EVENT_BEFORE_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
         $class_name="\\src\\plugins\\$plugin_name\\Main";
         if (class_exists($class_name)){
             /** @var  $plugin Plugin*/
@@ -63,12 +63,12 @@ class PluginManager
             if ($ret===true){
                 //初始化成功
                 self::$objs[$plugin_name]=$plugin; //存储插件对象
-                Event::fire(self::EVENT_AFTER_PLUGIN_INIT.$plugin_name,new Event(['plugin_name'=>$plugin_name]));
+                Event::trigger(self::EVENT_AFTER_PLUGIN_INIT.$plugin_name,new Event(['plugin_name'=>$plugin_name]));
             }else{
                 //初始化失败
                 trigger_error($plugin_name.self::LANG_ERROR_PLUGIN_INIT_FAILED,E_USER_ERROR);
             }
-            Event::fire(self::EVENT_AFTER_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
+            Event::trigger(self::EVENT_AFTER_PLUGIN_INIT,new Event(['plugin_name'=>$plugin_name]));
         }else{
             trigger_error($plugin_name.self::LANG_ERROR_PLUGIN_INIT_MISSING_MAIN_CLASS.':'.$class_name,E_USER_ERROR);
         }

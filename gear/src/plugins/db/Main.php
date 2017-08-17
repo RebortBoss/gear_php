@@ -16,7 +16,7 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'db',function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'db',function () use ($self) {
             Factory::addRecipe('db', function ($config_name='local',$convention=[]) {
                 $obj = new Db($config_name,$convention);
                 return $obj;

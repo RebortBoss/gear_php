@@ -17,7 +17,7 @@ class Main extends Plugin
 
     public function main()
     {
-        Event::addListener(Ctrl::EVENT_ON_GET_FORM_TOKEN,function (Event $event){
+        Event::bindListener(Ctrl::EVENT_ON_GET_FORM_TOKEN,function (Event $event){
             $token_key=\Yuri2::uniqueID();
             $token_value=\Yuri2::uniqueID();
             $s=maker()->session()->setPrefix('plugin.formToken');
@@ -27,7 +27,7 @@ class Main extends Plugin
             $event['token_value']=$token_value;
         });
 
-        Event::addListener(Ctrl::EVENT_ON_CHECK_FORM_TOKEN,function (Event $event){
+        Event::bindListener(Ctrl::EVENT_ON_CHECK_FORM_TOKEN,function (Event $event){
             $request=request();
             $is_right=false;
             foreach ($request as $k=>$v){

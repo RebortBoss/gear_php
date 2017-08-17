@@ -17,7 +17,7 @@ class Main extends Plugin
 
     public function main()
     {
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'qrCode', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'qrCode', function () {
             require __DIR__ . '/qrCodeBase.php';
             $obj = new QrCode();
             Factory::addRecipe('qrCode', function () use ($obj) {

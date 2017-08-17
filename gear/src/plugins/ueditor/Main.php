@@ -20,7 +20,7 @@ class Main extends Plugin
 
     public function main()
     {
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'ueditor', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'ueditor', function () {
             $obj = new Ueditor();
             Factory::addRecipe('ueditor', function () use ($obj) {
                 return $obj;

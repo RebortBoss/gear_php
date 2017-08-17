@@ -20,7 +20,7 @@ class Main extends Plugin
 
     public function main()
     {
-        Event::addListener(self::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN,function (){
+        Event::bindListener(self::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN,function (){
             $isAdmin=(true===(maker()->session()->setPrefix('plugin.admin')->offsetGet('isAdmin'))
                     or true===(maker()->cookie()->setPrefix('plugin_admin')->getCookie('isAdmin')));
             if ($isAdmin!==true){

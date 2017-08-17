@@ -33,21 +33,21 @@ const CIL_EVENT_ON_ERROR = 'EVENT_ON_ERROR';
 const CIL_EVENT_ON_EXCEPTION = 'EVENT_ON_EXCEPTION';
 
 register_shutdown_function(function () {
-    Event::fire(CIL_EVENT_ON_SHUTDOWN);
+    Event::trigger(CIL_EVENT_ON_SHUTDOWN);
     //debug模式下 禁用opcache缓存
     if (function_exists('opcache_reset') and config(Config::DEBUG)) {
         opcache_reset();
     }
     set_error_handler(function () {
         $args=func_get_args();
-        Event::fire(CIL_EVENT_ON_ERROR,new Event($args));
+        Event::trigger(CIL_EVENT_ON_ERROR,new Event($args));
     });
     set_exception_handler(function () {
         $args=func_get_args();
-        Event::fire(CIL_EVENT_ON_EXCEPTION,new Event($args));
+        Event::trigger(CIL_EVENT_ON_EXCEPTION,new Event($args));
     });
 
 
 });
 //启动
-Event::fire(CIL_EVENT_START);
+Event::trigger(CIL_EVENT_START);

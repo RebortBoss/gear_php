@@ -360,7 +360,7 @@ var Yuri2 = {
         return (navigator.language || navigator.browserLanguage).toLowerCase();
         //通常是 zh-cn
     },
-    iframeOnClick : {
+    iframeOnClick: {
         resolution: 200,
         iframes: [],
         interval: null,
@@ -394,5 +394,50 @@ var Yuri2 = {
             }
         }
     },
+    loadScript: function (url, callback) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        if (typeof(callback) !== "undefined") {
+            if (script.readyState) {
+                script.onreadystatechange = function () {
+                    if (script.readyState === "loaded" || script.readyState === "complete") {
+                        script.onreadystatechange = null;
+                        callback(script);
+                    }
+                };
+            } else {
+                script.onload = function () {
+                    callback(script);
+                };
+            }
+        }
+        script.src = url;
+        document.body.appendChild(script);
+    },
+    jsonp: function (url, data, callback) {
+        var func_name = Math.random();
+        if (!Yuri2.jsonp_funcs) {
+            Yuri2.jsonp_funcs = {};
+        }
+        Yuri2.jsonp_funcs[func_name] = callback;
+        var rel = '';
+        rel += url;
+        if (url.indexOf('?') < 0) {
+            rel += '?';
+        }
+        if (url.indexOf('&') > 0) {
+            rel += '&';
+        }
+        rel += 'callback=' + encodeURI('Yuri2.jsonp_funcs["' + func_name + '"]');
+        if (data) {
+            var data_str = JSON.stringify(data);
+            data_str = encodeURI(data_str);
+            rel += '&data=' + data_str;
+        }
+        Yuri2.loadScript(rel, function (script) {
+            script.parentNode.removeChild(script);
+        })
+
+    }
 };
 

@@ -17,7 +17,7 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'cache',function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'cache',function () use ($self) {
             $obj = new Cache($self->configs);
             Factory::addRecipe('cache', function () use ($obj) {
                 return $obj;

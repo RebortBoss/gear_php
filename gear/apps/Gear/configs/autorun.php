@@ -6,4 +6,4 @@
  * Time: 16:51
  */
 
-\src\cores\Event::fire(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
+\src\cores\Event::trigger(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);

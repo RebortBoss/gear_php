@@ -23,7 +23,7 @@ class Main extends Plugin
     public function main()
     {
 
-        Event::addListener(\src\cores\Main::EVENT_START, function () {
+        Event::bindListener(\src\cores\Main::EVENT_START, function () {
             if (IS_CLI) {
                 echo "
 
@@ -60,7 +60,7 @@ class Main extends Plugin
 
         });
 
-        Event::addListener(\src\cores\Main::EVENT_ON_SHUTDOWN, function () {
+        Event::bindListener(\src\cores\Main::EVENT_ON_SHUTDOWN, function () {
             if (IS_CLI) {
                 //打印结束分割线
                 echo "

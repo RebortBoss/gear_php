@@ -16,7 +16,7 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'uploader',function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'uploader',function () use ($self) {
             Factory::addRecipe('uploader', function ($path=null, $allowtype=null,$maxsize=null, $israndname=null) use ($self) {
                 $obj = new Uploader();
                 $obj->set('path',is_null($path)?$self->configs['path']:$path);

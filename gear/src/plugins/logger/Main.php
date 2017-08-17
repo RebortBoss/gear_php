@@ -21,14 +21,14 @@ class Main extends Plugin
     public function main()
     {
         $self = $this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'logger', function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'logger', function () use ($self) {
             $obj = new Logger();
             $obj->set($self->configs)->initLogger();
             Factory::addRecipe('logger', function () use ($obj) {
                 return $obj;
             });
         });
-        Event::addListener(\src\cores\Main::EVENT_ON_SHUTDOWN, function () {
+        Event::bindListener(\src\cores\Main::EVENT_ON_SHUTDOWN, function () {
             //在关闭前纪录日志
             if (config(Config::LOG_VISITOR_INFO)) {
                 $url = url();
@@ -41,7 +41,7 @@ class Main extends Plugin
     /** 从路由直接访问的方法 */
     public function direct()
     {
-        Event::fire(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
+        Event::trigger(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
         $log = request('log');
         switch ($this->configs['handler']) {
             case 'file':

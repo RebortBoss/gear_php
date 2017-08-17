@@ -17,7 +17,7 @@ use src\traits\Ctrl;
  */
 function checkCaptcha($code=''){
     $event=new Event(['code'=>$code,'is_right'=>false]);
-    Event::fire(Ctrl::EVENT_ON_CHECK_CAPTCHA,$event);
+    Event::trigger(Ctrl::EVENT_ON_CHECK_CAPTCHA,$event);
     return $event['is_right'];
 }
 
@@ -26,7 +26,7 @@ function checkCaptcha($code=''){
  */
 function checkFormToken(){
     $event=new Event(['is_right'=>false]);
-    Event::fire(Ctrl::EVENT_ON_CHECK_FORM_TOKEN,$event);
+    Event::trigger(Ctrl::EVENT_ON_CHECK_FORM_TOKEN,$event);
     return $event['is_right'];
 }
 

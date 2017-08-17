@@ -20,7 +20,7 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'arrayDb',function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'arrayDb',function () use ($self) {
             Factory::addRecipe('arrayDb', function ($name) {
                 $obj = new ArrayDb($name);
                 return $obj;

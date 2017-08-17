@@ -75,7 +75,7 @@ class Factory
      */
     public static function addRecipe($name,callable $callable){
         self::$recipes[$name]=$callable;
-        Event::fire(self::EVENT_AFTER_FACTORY_ADD_RECIPE . $name);
+        Event::trigger(self::EVENT_AFTER_FACTORY_ADD_RECIPE . $name);
     }
 
     /**
@@ -105,7 +105,7 @@ class Factory
     public function __call($name, $args)
     {
         if (!self::hasRecipe($name)){
-            Event::fire(self::EVENT_NEED_RECIPE.$name);
+            Event::trigger(self::EVENT_NEED_RECIPE.$name);
         }
 
         if (isset(self::$recipes[$name]) and is_callable(self::$recipes[$name])){

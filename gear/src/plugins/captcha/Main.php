@@ -18,14 +18,14 @@ class Main extends Plugin
     public function main()
     {
         $self = $this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'captcha', function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'captcha', function () use ($self) {
             $obj = new Captcha();
             $obj->set($self->configs);
             Factory::addRecipe('captcha', function () use ($obj) {
                 return $obj;
             });
         });
-        Event::addListener(Ctrl::EVENT_ON_CHECK_CAPTCHA, function (Event $event) {
+        Event::bindListener(Ctrl::EVENT_ON_CHECK_CAPTCHA, function (Event $event) {
             $s=maker()->session()->setPrefix('plugin.captcha');
             $code_last = $s['code'];
             if (strtolower($code_last) == strtolower($event['code']) and $event['code']!='') {

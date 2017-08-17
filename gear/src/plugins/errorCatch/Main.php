@@ -20,19 +20,19 @@ class Main extends Plugin
     public function main()
     {
 
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'errorCatch',function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'errorCatch',function () {
             $obj = new ErrorCatch();
             Factory::addRecipe('errorCatch', function () use ($obj) {
                 return $obj;
             });
         });
-        Event::addListener(\src\cores\Main::EVENT_ON_ERROR,function (Event $event){
+        Event::bindListener(\src\cores\Main::EVENT_ON_ERROR,function (Event $event){
             ErrorCatch::onError($event[0],$event[1],$event[2],$event[3]);
         });
-        Event::addListener(\src\cores\Main::EVENT_ON_EXCEPTION,function (Event $event){
+        Event::bindListener(\src\cores\Main::EVENT_ON_EXCEPTION,function (Event $event){
             ErrorCatch::onException($event[0]);
         });
-        Event::addListener(\src\cores\Main::EVENT_ON_SHUTDOWN,function (){
+        Event::bindListener(\src\cores\Main::EVENT_ON_SHUTDOWN,function (){
             if (!config(Config::API_MODE) and config(Config::DEBUG) and config(Config::SHOW_DEBUG_BTN)){
                 ErrorCatch::displayTrace();
             }

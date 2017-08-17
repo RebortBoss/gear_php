@@ -26,7 +26,7 @@ class Main extends Plugin
         //加载路由解析特殊规则
         RouteSpecial::setRules($this->rules);
 
-        Event::addListener(Route::EVENT_BEFORE_FORMAT_RES,function (Event $event){
+        Event::bindListener(Route::EVENT_BEFORE_FORMAT_RES,function (Event $event){
             //路由正解前
             $info=$event['info'];
 
@@ -42,7 +42,7 @@ class Main extends Plugin
             }
         });
 
-        Event::addListener(Route::EVENT_BEFORE_FORMAT_URL,function (Event $event){
+        Event::bindListener(Route::EVENT_BEFORE_FORMAT_URL,function (Event $event){
             //url反解
             $url=$event['url'];
             $rs=new RouteSpecial();

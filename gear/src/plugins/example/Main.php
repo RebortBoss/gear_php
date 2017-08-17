@@ -16,7 +16,7 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'example',function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'example',function () use ($self) {
             Factory::addRecipe('example', function () {
                 $obj = new Example();
                 return $obj;

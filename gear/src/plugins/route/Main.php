@@ -23,7 +23,7 @@ class Main extends Plugin
     {
         if(IS_CLI){return true;} //如果是CLI模式，不进行任何操作
 
-        Event::addListener(\src\cores\Main::EVENT_START, function () {
+        Event::bindListener(\src\cores\Main::EVENT_START, function () {
             $route=new Route();
             $route->set($this->configs);
             Factory::addRecipe('route', function () use ($route) {

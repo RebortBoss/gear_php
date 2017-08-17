@@ -141,7 +141,7 @@ class Route extends Base
 
         //预留特殊路由识别的接口
         $event = new Event(['info'=>$info]);
-        Event::fire(self::EVENT_BEFORE_FORMAT_RES, $event);
+        Event::trigger(self::EVENT_BEFORE_FORMAT_RES, $event);
         $info = $event['info'];
 
 
@@ -230,7 +230,7 @@ class Route extends Base
 
         //此处，进行路由生成反解
         $event = new Event(['url'=>$url]);
-        Event::fire(self::EVENT_BEFORE_FORMAT_URL, $event);
+        Event::trigger(self::EVENT_BEFORE_FORMAT_URL, $event);
         $url = $event['url'];
 
         //定义处理函数

@@ -11,9 +11,8 @@ namespace src\traits;
 
 use src\cores\Config;
 use src\cores\Event;
-use src\plugins\cookie\Cookie;
-use src\plugins\sender\Sender;
-use src\plugins\session\Session;
+use src\plugins\factory\libs\Cookie;
+use src\plugins\factory\libs\Session;
 
 class Ctrl extends Base
 {
@@ -47,7 +46,7 @@ class Ctrl extends Base
     public function render($res=''){
         $this->assigns['self'] = isset($this->assigns['self'])?$this->assigns['self']:$this;
         $res=url_info($res,[],true);
-        Event::fire(self::EVENT_ON_RENDER,new Event(['res'=>$res,'assigns'=>$this->getAssigns()]));
+        Event::trigger(self::EVENT_ON_RENDER,new Event(['res'=>$res,'assigns'=>$this->getAssigns()]));
     }
 
     /**
@@ -70,7 +69,7 @@ class Ctrl extends Base
      */
     protected function checkCaptcha($code=''){
         $event=new Event(['code'=>$code,'is_right'=>false]);
-        Event::fire(self::EVENT_ON_CHECK_CAPTCHA,$event);
+        Event::trigger(self::EVENT_ON_CHECK_CAPTCHA,$event);
         return $event['is_right'];
     }
 
@@ -79,7 +78,7 @@ class Ctrl extends Base
      */
     protected function checkFormToken(){
         $event=new Event(['is_right'=>false]);
-        Event::fire(self::EVENT_ON_CHECK_FORM_TOKEN,$event);
+        Event::trigger(self::EVENT_ON_CHECK_FORM_TOKEN,$event);
         return $event['is_right'];
     }
 
@@ -89,11 +88,15 @@ class Ctrl extends Base
      * 关闭其他额外的输出
      * @param $switch bool
      * @param $format string
+     * @return string |null 如果是jsonp模式，提供了一个data的返回值（搭配Yuri2.js有效）
      */
     protected function apiMode($switch=true,$format='json'){
         config(Config::API_MODE,$switch);
         config(Config::API_FORMAT,$format);
+        config(Config::ERROR_LOG_LV,2);
         ignore_user_abort($switch);
+        return $switch && $format=='jsonp' && request('data')?
+            maker()->format()->jsonToArray(request('data')):null;
     }
 
     /** @return Cookie */

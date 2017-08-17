@@ -15,13 +15,16 @@ class Event implements \ArrayAccess
     private static $fozenList=[]; //冻结表
     private static $isFreezeAll=false; //冻结所有事件 开关
 
+    public $data=[]; //公开数据域
+    private $spreadAllowed=true; //允许继续传播
+
     /**
      * 添加一个事件监听
      * @param $event_name string 事件名
      * @param $callable callable 回调函数
      * @param $id string
      */
-    public static function addListener($event_name, callable $callable,$id=null){
+    public static function bindListener($event_name, callable $callable, $id=null){
         if ($id){
             self::$callbacks[$event_name][$id]=$callable;
         }else{
@@ -43,7 +46,7 @@ class Event implements \ArrayAccess
      * @param $event_name string 事件名
      * @param $event Event
      */
-    public static function fire($event_name,Event $event=null){
+    public static function trigger($event_name, Event $event=null){
         if (!self::isFrozen($event_name) and !self::$isFreezeAll) {
             if (isset(self::$callbacks[$event_name])){
                 if (is_null($event)){$event=new Event([]);}
@@ -101,9 +104,6 @@ class Event implements \ArrayAccess
     public static function isFrozen($event_name){
         return in_array($event_name,self::$fozenList);
     }
-
-    public $data=[]; //公开数据域
-    private $spreadAllowed=true; //允许继续传播
 
     /** 初始化，赋值数据
      * @param $data array

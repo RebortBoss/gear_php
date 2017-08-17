@@ -16,7 +16,7 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'weiChat',function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'weiChat',function () use ($self) {
             $obj = new WeiChat($self->configs);
             Factory::addRecipe('weiChat', function () use ($obj) {
                 return $obj;

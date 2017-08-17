@@ -5,7 +5,7 @@
  * Date: 2017/4/17
  * Time: 11:21
  */
-\src\cores\Event::fire(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
+\src\cores\Event::trigger(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
 if (maker()->request()->isPost()){
     $psw=request('psw');
     maker()->file()->writeFile(dirname(__DIR__).'/password.php',md5($psw));

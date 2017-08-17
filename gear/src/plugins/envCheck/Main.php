@@ -26,7 +26,7 @@ class Main extends Plugin
     /** 从路由直接访问的方法 */
     public function direct()
     {
-        Event::fire(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
+        Event::trigger(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
         config(Config::SHOW_DEBUG_BTN,false);
         include __DIR__ . '/probe.php';
         exit();

@@ -125,7 +125,7 @@ class Dispatch extends Base
                 maker()->sender()->notFound($this->res, 'back', 3);
         } else {
             $event = new Event(['ctrl' => $this->ctrl]);
-            Event::fire(self::EVENT_BEFORE_CTRL_RUN, $event);
+            Event::trigger(self::EVENT_BEFORE_CTRL_RUN, $event);
             $rel = \Yuri2::invokeMethod($this->methodRef, $route_param, $this->ctrl);
             if (config(Config::API_MODE)) {
                 switch (config(Config::API_FORMAT)) {
@@ -135,12 +135,15 @@ class Dispatch extends Base
                     case 'xml':
                         $rel = maker()->format()->arrayToXml($rel);
                         break;
+                    case 'jsonp':
+                        $rel=request('callback').'('.maker()->format()->arrayToJson($rel).')';
+                        break;
                 }
                 echo $rel;
             } else {
                 \Yuri2::smarterEcho($rel);
             }
-            Event::fire(self::EVENT_AFTER_CTRL_RUN, $event);
+            Event::trigger(self::EVENT_AFTER_CTRL_RUN, $event);
         }
     }
 }

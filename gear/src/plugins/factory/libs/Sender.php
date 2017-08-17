@@ -132,7 +132,7 @@ class Sender
     function success($msg = '', $url_jump = '', $count_down = 0)
     {
         $url_self=url();
-        Event::fire(self::EVENT_INFO_SUCCESS, new Event(compact('msg','url_self', 'url_jump', 'count_down')));
+        Event::trigger(self::EVENT_INFO_SUCCESS, new Event(compact('msg','url_self', 'url_jump', 'count_down')));
     }
 
     /**
@@ -144,7 +144,7 @@ class Sender
     function warning($msg = '', $url_jump = '', $count_down = 0)
     {
         $url_self=url();
-        Event::fire(self::EVENT_INFO_WARNING,new Event(compact('msg','url_self', 'url_jump', 'count_down')));
+        Event::trigger(self::EVENT_INFO_WARNING,new Event(compact('msg','url_self', 'url_jump', 'count_down')));
     }
 
     /**
@@ -156,7 +156,7 @@ class Sender
     function error($msg = '', $url_jump = '', $count_down = 0)
     {
         $url_self=url();
-        Event::fire(self::EVENT_INFO_ERROR,new Event(compact('msg','url_self', 'url_jump', 'count_down')));
+        Event::trigger(self::EVENT_INFO_ERROR,new Event(compact('msg','url_self', 'url_jump', 'count_down')));
     }
 
     /**
@@ -168,7 +168,7 @@ class Sender
     function attention($msg = '', $url_jump = '', $count_down = 0)
     {
         $url_self=url();
-        Event::fire(self::EVENT_INFO_ATTENTION,new Event(compact('msg','url_self', 'url_jump', 'count_down')));
+        Event::trigger(self::EVENT_INFO_ATTENTION,new Event(compact('msg','url_self', 'url_jump', 'count_down')));
     }
 
     /**
@@ -180,7 +180,7 @@ class Sender
     function notFound($msg = '', $url_jump = '', $count_down = 0)
     {
         $url_self=url();
-        Event::fire(self::EVENT_INFO_NOT_FOUND, new Event(compact('msg','url_self', 'url_jump', 'count_down')));
+        Event::trigger(self::EVENT_INFO_NOT_FOUND, new Event(compact('msg','url_self', 'url_jump', 'count_down')));
     }
 
     /**

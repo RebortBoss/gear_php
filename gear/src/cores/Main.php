@@ -22,7 +22,7 @@ class Main
     public function main()
     {
         $this->init();
-        Event::fire(self::EVENT_START);
+        Event::trigger(self::EVENT_START);
     }
 
     /** 初始化 */
@@ -104,18 +104,18 @@ class Main
     private function sysEvent()
     {
         register_shutdown_function(function () {
-            Event::fire(self::EVENT_ON_SHUTDOWN);
+            Event::trigger(self::EVENT_ON_SHUTDOWN);
             if (function_exists('opcache_reset') and config(Config::DEBUG)) {
                 opcache_reset();
             }
         });
         set_error_handler(function () {
             $args=func_get_args();
-            Event::fire(self::EVENT_ON_ERROR,new Event($args));
+            Event::trigger(self::EVENT_ON_ERROR,new Event($args));
         });
         set_exception_handler(function () {
             $args=func_get_args();
-            Event::fire(self::EVENT_ON_EXCEPTION,new Event($args));
+            Event::trigger(self::EVENT_ON_EXCEPTION,new Event($args));
         });
     }
 
@@ -129,6 +129,6 @@ class Main
     /** 析构 */
     function __destruct()
     {
-        Event::fire(self::EVENT_DESTRUCT);
+        Event::trigger(self::EVENT_DESTRUCT);
     }
 }

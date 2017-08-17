@@ -30,7 +30,7 @@ return [
         }
 
         $self=$this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'encrypt',function () use ($self){
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'encrypt',function () use ($self){
             $obj = new Encrypt();
             $obj->set($self->configs);
             Factory::addRecipe('encrypt', function () use ($obj) {

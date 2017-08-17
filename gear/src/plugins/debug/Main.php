@@ -18,14 +18,14 @@ class Main extends Plugin
     public function main()
     {
         $self = $this;
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'debug', function () use ($self) {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'debug', function () use ($self) {
             $obj = new Debug();
             $obj->set($self->configs);
             Factory::addRecipe('debug', function () use ($obj) {
                 return $obj;
             });
         });
-        Event::addListener(\src\cores\Main::EVENT_ON_SHUTDOWN, function () {
+        Event::bindListener(\src\cores\Main::EVENT_ON_SHUTDOWN, function () {
             if (config(Config::DEBUG) and !IS_CLI) {
                 maker()->debug()->saveReport();
             }
@@ -39,7 +39,7 @@ class Main extends Plugin
         //先创建文件夹
         maker()->file()->createDir(PATH_RUNTIME . "/reports");
 
-        Event::fire(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
+        Event::trigger(\src\plugins\admin\Main::EVENT_PLUGIN_ADMIN_ON_CHECK_ADMIN);
         $id = request('id');
         $path = PATH_RUNTIME . "/reports/{$id}.php";
         if ($id == '') {

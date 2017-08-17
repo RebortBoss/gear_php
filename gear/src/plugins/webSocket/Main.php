@@ -19,13 +19,13 @@ class Main extends Plugin
 
     public function main()
     {
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'webSocketServer',function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'webSocketServer',function () {
             Factory::addRecipe('webSocketServer', function ($host = 'localhost', $port = 8000, $ssl = false) {
                 $obj = new Server($host, $port , $ssl);
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'webSocketClient',function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'webSocketClient',function () {
             Factory::addRecipe('webSocketClient', function () {
                 $obj = new Client();
                 return $obj;

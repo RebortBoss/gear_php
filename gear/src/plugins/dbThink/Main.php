@@ -22,13 +22,13 @@ class Main extends Plugin
     {
         require __DIR__.'/autoloader.php';
 
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'model_M',function (){
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'model_M',function (){
             Factory::addRecipe('model_M', function ($name='', $tablePrefix='',$connection='') {
                 return Adapter::M($name, $tablePrefix,$connection);
             });
         });
 
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'model_D',function (){
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'model_D',function (){
             Factory::addRecipe('model_D', function ($name='') {
                 return Adapter::D($name);
             });

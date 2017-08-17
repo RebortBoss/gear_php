@@ -19,7 +19,7 @@ class Main extends Plugin
     public function main()
     {
         $self=$this;
-        Event::addListener(Ctrl::EVENT_ON_RENDER, function (Event $event) use ($self){
+        Event::bindListener(Ctrl::EVENT_ON_RENDER, function (Event $event) use ($self){
             $obj = new View();
             $obj->set('assigns',$event['assigns']);
             $obj->set('res',$event['res']);

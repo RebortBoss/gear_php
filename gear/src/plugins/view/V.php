@@ -207,7 +207,7 @@ class V
      */
     public static function formToken(){
         $event=new \src\cores\Event(['rel'=>'']);
-        \src\cores\Event::fire(\src\traits\Ctrl::EVENT_ON_GET_FORM_TOKEN,$event);
+        \src\cores\Event::trigger(\src\traits\Ctrl::EVENT_ON_GET_FORM_TOKEN,$event);
         return $event['rel'];
     }
 

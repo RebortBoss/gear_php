@@ -29,66 +29,66 @@ class Main extends Plugin
 
     public function main()
     {
-        Event::addListener(Factory::EVENT_NEED_RECIPE.'pinq',function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE.'pinq',function () {
             Factory::addRecipe('pinq', function ($from_array) {
                 return Traversable::from($from_array);
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'cookie', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'cookie', function () {
             Factory::addRecipe('cookie', function () {
                 $obj = new Cookie();
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'excel', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'excel', function () {
             Factory::addRecipe('excel', function () {
                 $obj = new Excel();
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'file', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'file', function () {
             $obj = new File();
             Factory::addRecipe('file', function () use ($obj) {
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'format', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'format', function () {
             $obj = new Format();
             Factory::addRecipe('format', function () use ($obj) {
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'image', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'image', function () {
             Factory::addRecipe('image', function ($img_file, $status = 0) {
                 $obj = new Image($img_file, $status);
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'request', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'request', function () {
             $req = new Request();
             Factory::addRecipe('request', function () use ($req) {
                 return $req;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'semaphore', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'semaphore', function () {
             Factory::addRecipe('semaphore', function ($name) {
                 $obj = new Semaphore($name);
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'sender', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'sender', function () {
             $obj = new Sender();
             Factory::addRecipe('sender', function () use ($obj) {
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'session', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'session', function () {
             Factory::addRecipe('session', function () {
                 $obj = new Session();
                 return $obj;
             });
         });
-        Event::addListener(Factory::EVENT_NEED_RECIPE . 'locker', function () {
+        Event::bindListener(Factory::EVENT_NEED_RECIPE . 'locker', function () {
             Factory::addRecipe('locker', function ($id) {
                 $obj = new Locker($id);
                 return $obj;
