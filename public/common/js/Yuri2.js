@@ -414,7 +414,18 @@ var Yuri2 = {
         script.src = url;
         document.body.appendChild(script);
     },
-    jsonp: function (url, data, callback) {
+
+    /**
+     * jsonp  请求
+     * @param url string
+     * @param data json
+     * @param callback callback
+     * @param name_data string
+     * @param name_callback string
+     * */
+    jsonp: function (url, data, callback,name_data,name_callback) {
+        name_data||(name_data='data');
+        name_callback||(name_callback='callback');
         var func_name = Math.random();
         if (!Yuri2.jsonp_funcs) {
             Yuri2.jsonp_funcs = {};
@@ -428,11 +439,11 @@ var Yuri2 = {
         if (url.indexOf('&') > 0) {
             rel += '&';
         }
-        rel += 'callback=' + encodeURI('Yuri2.jsonp_funcs["' + func_name + '"]');
+        rel += name_callback+'=' + encodeURI('Yuri2.jsonp_funcs["' + func_name + '"]');
         if (data) {
             var data_str = JSON.stringify(data);
             data_str = encodeURI(data_str);
-            rel += '&data=' + data_str;
+            rel += '&'+name_data+'=' + data_str;
         }
         Yuri2.loadScript(rel, function (script) {
             script.parentNode.removeChild(script);
