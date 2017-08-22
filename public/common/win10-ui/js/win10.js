@@ -2,6 +2,7 @@
  * Created by Yuri2 on 2017/7/10.
  */
 window.Win10 = {
+    _version:'v1.1.2.2(dev)',
     _debug:true,
     _bgs:{
         main:'',
@@ -58,12 +59,12 @@ window.Win10 = {
         btns.css('width',('calc('+(1/this._countTask*100)+'% - 1px )'))
     },
     _handleReady:function () {},
-    _hideShotcut:function () {
+    _hideShortcut:function () {
         var that=$("#win10 #win10-shortcuts .shortcut");
         that.removeClass('animated flipInX');
         that.addClass('animated flipOutX');
     },
-    _showShotcut:function () {
+    _showShortcut:function () {
         var that=$("#win10 #win10-shortcuts .shortcut");
         that.removeClass('animated flipOutX');
         that.addClass('animated flipInX');
@@ -210,6 +211,13 @@ window.Win10 = {
     _removeContextMenu:function () {
         $('.win10-context-menu').remove();
     },
+    _closeWin:function (index) {
+        $("#win10_" + index).remove();
+        layer.close(index);
+        Win10._checkTop();
+        Win10._countTask--;//回退countTask数
+        Win10._renderBar();
+    },
     _init:function () {
 
         //获取语言
@@ -303,10 +311,7 @@ window.Win10 = {
         });
         $('#win10_btn_group_middle').on('click','.btn_close',function () {
             var index = $(this).parent().attr('index') ;
-            Win10.getLayeroByIndex(index).remove();
-            $(this).parent().remove();
-            Win10._countTask--;
-            Win10._renderBar();
+            Win10._closeWin(index);
         });
         $('#win10-menu .list').on('click','.item',function () {
             var e=$(this);
@@ -347,8 +352,8 @@ window.Win10 = {
         Win10._startAnimate();//动画处理
         Win10.renderShortcuts();//渲染图标
         $("#win10-shortcuts").removeClass('shortcuts-hidden');//显示图标
+        Win10._showShortcut();//显示图标
         Win10.renderMenuBlocks();//渲染磁贴
-        Win10._showShotcut();//显示磁贴
         //窗口改大小，重新渲染
         $(window).resize(function() {
             Win10.renderShortcuts();
@@ -379,15 +384,69 @@ window.Win10 = {
         //设置默认右键菜单
         Win10.setContextMenu('#win10',true);
         Win10.setContextMenu('#win10>.desktop',[
-            ['<i class="fa fa-fw fa-window-maximize"></i> 进入全屏',function () {Win10.enableFullScreen()}],
-            ['<i class="fa fa-fw fa-window-restore"></i> 退出全屏',function () {Win10.disableFullScreen()}],
+            ['<i class="fa fa-fw fa-star"></i> 收藏本页',function () {
+                var url = window.location;
+                var title = document.title;
+                var ua = navigator.userAgent.toLowerCase();
+                if (ua.indexOf("360se") > -1) {
+                    alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
+                }
+                else if (ua.indexOf("msie 8") > -1) {
+                    window.external.AddToFavoritesBar(url, title); //IE8
+                }
+                else if (document.all) {
+                    try{
+                        window.external.addFavorite(url, title);
+                    }catch(e){
+                        alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+                    }
+                }
+                else if (window.sidebar) {
+                    window.sidebar.addPanel(title, url, "");
+                }
+                else {
+                    alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+                }
+            }],
+            ['<i class="fa fa-fw fa-window-maximize"></i> '+Win10.lang('进入全屏','Enable Full Screen'),function () {Win10.enableFullScreen()}],
+            ['<i class="fa fa-fw fa-window-restore"></i> '+Win10.lang('退出全屏','Disable Full Screen'),function () {Win10.disableFullScreen()}],
             '|',
-            ['<i class="fa fa-fw fa-star"></i> 关于',function () {Win10.aboutUs()}],
+            ['<i class="fa fa-fw fa-info-circle"></i> '+Win10.lang('关于','About Us'),function () {Win10.aboutUs()}],
         ]);
         Win10.setContextMenu('#win10_btn_group_middle',[
-            ['<i class="fa fa-fw fa-window-minimize"></i> 全部隐藏',function () {Win10.hideWins()}],
-            ['<i class="fa fa-fw fa-window-close"></i> 全部关闭',function () {Win10.closeAll()}],
+            ['<i class="fa fa-fw fa-window-maximize"></i> '+Win10.lang('全部显示','Show All Windows'),function () {Win10.showWins()}],
+            ['<i class="fa fa-fw fa-window-minimize"></i> '+Win10.lang('全部隐藏','Hide All Windows'),function () {Win10.hideWins()}],
+            ['<i class="fa fa-fw fa-window-close"></i> '+Win10.lang('全部关闭','Close All Windows'),function () {Win10.closeAll()}],
         ]);
+
+        //处理消息图标闪烁
+        setInterval(function () {
+            var btn=$("#win10-msg-nof.on-new-msg");
+            if(btn.length>0){
+                btn.toggleClass('fa-commenting-o');
+            }
+        },600);
+
+        //绑定快捷键
+        $("body").keyup(function (e) {
+            if (e.ctrlKey)
+            {
+                switch (e.keyCode){
+                    case 37://left
+                        $("#win10_btn_win").click();
+                        break;
+                    case 38://up
+                        Win10.showWins();
+                        break;
+                    case 39://right
+                        $("#win10_btn_command").click();
+                        break;
+                    case 40://down
+                        Win10.hideWins();
+                        break;
+                }
+            }
+        });
     },
     setBgUrl:function (bgs) {
         this._bgs=bgs;
@@ -396,13 +455,13 @@ window.Win10 = {
     menuClose: function () {
         $("#win10-menu").removeClass('opened');
         $("#win10-menu").addClass('hidden');
-        this._showShotcut();
+        this._showShortcut();
         $(".win10-open-iframe").removeClass('hide');
     },
     menuOpen: function () {
         $("#win10-menu").addClass('opened');
         $("#win10-menu").removeClass('hidden');
-        this._hideShotcut();
+        this._hideShortcut();
         $(".win10-open-iframe").addClass('hide');
     },
     menuToggle: function () {
@@ -414,14 +473,14 @@ window.Win10 = {
     },
     commandCenterClose: function () {
         $("#win10_command_center").addClass('hidden_right');
-        this._showShotcut();
+        this._showShortcut();
         $(".win10-open-iframe").removeClass('hide');
     },
     commandCenterOpen: function () {
         $("#win10_command_center").removeClass('hidden_right');
-        this._hideShotcut();
+        this._hideShortcut();
         $(".win10-open-iframe").addClass('hide');
-        $("#win10-msg-nof").removeClass('fa-commenting-o');
+        $("#win10-msg-nof").removeClass('on-new-msg fa-commenting-o');
     },
     renderShortcuts:function () {
         var h=parseInt($("#win10 #win10-shortcuts")[0].offsetHeight/100);
@@ -488,7 +547,7 @@ window.Win10 = {
             time: 3000
         });
         if($("#win10_command_center").hasClass('hidden_right')){
-            $("#win10-msg-nof").addClass('fa-commenting-o');
+            $("#win10-msg-nof").addClass('on-new-msg');
         }
     },
     getLayeroByIndex: function (index) {
@@ -562,14 +621,13 @@ window.Win10 = {
             title = url;
         }
         var area,offset;
-        if(typeof areaAndOffset ==='object'){
-            area=areaAndOffset[0];
-            offset=areaAndOffset[1];
-        }
-        else if (this.isSmallScreen() || areaAndOffset==='max') {
+        if (this.isSmallScreen() || areaAndOffset==='max') {
             area = ['100%', (document.body.clientHeight - 40) + 'px'];
             offset = ['0', '0'];
-        } else {
+        }else if(typeof areaAndOffset ==='object'){
+            area=areaAndOffset[0];
+            offset=areaAndOffset[1];
+        }else {
             area = ['80%', '80%'];
             var topset, leftset;
             topset = parseInt($(window).height());
@@ -706,10 +764,10 @@ window.Win10 = {
             closeBtn: 1, //不显示关闭按钮
             anim: 2,
             skin: 'layui-layer-molv',
-            title: 'win10-ui v1.1.170805',
+            title: 'WIN10-UI '+this._version,
             shadeClose: true, //开启遮罩关闭
-            area: ['420px', '240px'], //宽高
-            content: '<div style=\'padding: 10px\'>' +
+            area: ['320px', '200px'], //宽高
+            content: '<div style="padding: 10px;font-size: 12px">' +
             '<p>支持组件:layer、jquery、animated.css、font-awesome</p>' +
             '<p>尤里2号©版权所有</p>' +
             '<p>作者邮箱:yuri2peter@qq.com</p>' +
@@ -724,7 +782,12 @@ window.Win10 = {
         jq_dom.on('contextmenu', function(e) {
             if(menu){
                 Win10._renderContextMenu(e.clientX,e.clientY,menu,this);
-                e.preventDefault();
+                if (e.cancelable) {
+                    // 判断默认行为是否已经被禁用
+                    if (!e.defaultPrevented) {
+                        e.preventDefault();
+                    }
+                }
                 e.stopPropagation();
             }
         });
@@ -737,6 +800,15 @@ window.Win10 = {
             $(this).removeClass('active');
             layero.hide();
         })
+    },
+    showWins:function () {
+        $('#win10_btn_group_middle>.btn').each(function () {
+            var index = $(this).attr('index');
+            var layero = Win10.getLayeroByIndex(index);
+            $(this).addClass('show');
+            layero.show();
+        });
+        Win10._checkTop();
     },
     onReady:function (handle) {
         Win10._handleReady=handle;

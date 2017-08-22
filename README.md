@@ -1,5 +1,3 @@
-![url_gear_logo](http://ojp71nnay.bkt.clouddn.com/logo_gear.png)
-
 [2]: https://github.com/yuri2peter/gear_php.git
 
 GearPHP

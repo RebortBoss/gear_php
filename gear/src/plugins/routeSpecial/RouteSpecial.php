@@ -30,7 +30,7 @@ class RouteSpecial
             if (preg_match($preg,$this->res,$matches)){
                 $rel=call_user_func_array($closure,$matches);
                 if (is_string($rel)){
-                    return $rel;
+                    $this->res= $rel;
                 }
             }
         }

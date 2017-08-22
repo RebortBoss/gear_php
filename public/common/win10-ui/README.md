@@ -1,6 +1,6 @@
-## WIN10-UI
+VERSION.txt## WIN10-UI
 
-Win10-ui是一款win10风格的后台UI，让您轻松搭建一个别具一格的后台界面。
+Win10-UI是一款win10风格的后台UI，让您轻松搭建一个别具一格的后台界面。
 
  | [官网](http://win10ui.yuri2.cn/) 
  | [demo](http://win10ui.yuri2.cn/src/demo.php) 
@@ -10,17 +10,17 @@ Win10-ui是一款win10风格的后台UI，让您轻松搭建一个别具一格�
 
 ## 版本
 
-v1.1.170805
+v1.1.2.1
 
->v1.1上线啦，涉及到API级别的修改，v1.0的小伙伴们请仔细阅读文档和DEMO平稳过渡
+>v1.1.2.1相较于v.1.1.2.0修复了一个小bug，优化了视觉效果，添加了一个动画辅助类。
+升级指南：直接覆盖js和css即可,html页面无须改动。
 
 ## 预览
- ![1](http://ojp71nnay.bkt.clouddn.com/win10-uiwin10-ui-5.png)
- 
- ![1](http://ojp71nnay.bkt.clouddn.com/win10-uiwin10-ui-1.png)
- 
- ![4](http://ojp71nnay.bkt.clouddn.com/win10-uiwin10-ui-4.png)
 
+ ![1](http://win10ui.yuri2.cn/src/img/preview/win10-preview.gif)
+ 
+ ![1](http://win10ui.yuri2.cn/src/img/preview/win10-preview-mobile.gif)
+ 
 
 ## 特性
 
@@ -107,7 +107,7 @@ v1.1.170805
 > 所有方法都需要加``Win10.``前缀。
 
 * setBgUrl(bgs) 设置背景图片 ``Win10.setBgUrl({main:'宽屏壁纸url',mobile:'竖屏壁纸url',})``
-* openUrl(url,title,areaAndOffset) ** 打开一个子窗口,参数列表：url,标题，[区域,尺寸]\(同layer的area和offset的设置格式，也可以传入'max'强制最大化\)
+* openUrl(url,title,areaAndOffset) ** 打开一个子窗口,参数列表：url,标题，[尺寸，区域]\(同layer的area和offset的设置格式，也可以传入'max'强制最大化，例如``[['30%','30%'],['50px','50px']]``\)
 * onReady(handle) win10-ui初始化完毕后的回调
 * menuOpen() 开始菜单打开
 * menuClose() 开始菜单关闭
@@ -131,6 +131,12 @@ v1.1.170805
 ## 进阶篇
 
 >推荐仔细查看demo的代码，很多用法都有所提及
+
+#### 设计思路
+
+* Win10-UI应当作为你网站模块的主入口，而具体功能页面适合用子窗口的形式打开。子窗口是以iframe实现的，减少了js、css冲突，保证了独立性。同时父子页之间也可以通过Win10_child.js的API进行沟通
+* 桌面图标适用于最常用的操作，菜单适用于构建所有操作的清单（这里的操作不限于打开子窗口）
+* 小磁贴视觉冲击力强，除了可以做出醒目的按钮，也可以用作信息展板，甚至于在磁贴的方块空间内构建复杂的应用（如音乐播放器）
 
 #### icon辅助类
 
@@ -170,27 +176,42 @@ Win10.openUrl("http://win10ui.yuri2.cn","<i class=\"fa fa-camera-retro icon\"></
 * 自定义一些hover的动画能起到很好的效果哦
 * vue等前端神器的支持
 
+#### 小磁贴辅助类
+
+你可以放置两个content，并赋予detail和cover的辅助类，将得到炫酷的封面切换主体的动画效果。
+
+~~~html
+<div loc="1,1" size="6,3" class="block">
+   <div class="content red detail" >
+       我是主体
+   </div>
+   <div class="content red cover">
+       我是封面
+   </div>
+</div>
+~~~
+
 #### 父子页沟通
 
 * 要使用子页工具集，请先引入win10.child.js
-* 自由的使用Win10_child对象吧，目前包含close、newMsg函数；也可以使用Win10对象，将指向父页的Win10对象。
-* 父页打开子窗口的函数openUrl会返回ifram的索引index，使用getLayeroByIndex(index)获得子窗口对象,然后就可以方便的控制子窗口的行为了。
+* 自由的使用Win10_child对象吧，目前包含close、newMsg、openUrl函数；也可以使用Win10_parent对象，将指向父页的Win10对象。
+* 父页打开子窗口的函数openUrl会返回索引index，使用getLayeroByIndex(index)获得子窗口对象,然后就可以方便的控制子窗口的行为了。
 
 #### 颜色预定义
 
 各种颜色 具体效果见 https://www.kancloud.cn/qq85569256/xzui/350010
-* .black-green{background:#009688}
-* .green{background:#5FB878}
-* .black{background:#393D49}
-* .blue{background:#1E9FFF}
-* .orange{background:#F7B824}
-* .red{background:#FF5722}
-* .dark{background:#2F4056}
+* black-green{background:#009688}
+* green{background:#5FB878}
+* black{background:#393D49}
+* blue{background:#1E9FFF}
+* orange{background:#F7B824}
+* red{background:#FF5722}
+* dark{background:#2F4056}
 
 #### 右键菜单配置
 
 Win10.setContextMenu(jq_dom, menu) 可接管系统默认的右键菜单。
-其中jq_dom是jq对象或选择器字符串,menu是菜单配置项(true表示禁言默认菜单,null表示恢复默认菜单,[数组]表示自定义菜单)
+其中jq_dom是jq对象或选择器字符串,menu是菜单配置项(true表示禁用默认菜单,null表示恢复默认菜单,[数组]表示自定义菜单)
 ~~~js
 //典型用法(桌面菜单)
 Win10.setContextMenu('#win10>.desktop',[
@@ -213,7 +234,6 @@ Win10.setContextMenu('#win10',true);
 * 多主题切换
 * 主题生成器
 * 日历、音乐播放器等小组件
-* 右键菜单功能加强
 
 ## 联系作者
 
@@ -235,8 +255,16 @@ Win10.setContextMenu('#win10',true);
 
 -----------------------------------------------------------
 
+## TODO
+
+ * 更丰富的DEMO元素
+
 ## 更新日志
 
+* 2017/8/21 [优化]减小了子窗口按钮的宽度;手机屏幕openUrl打开的子窗口现在默认最大化了;消息提醒图标改为闪烁（感谢'Mr天明'的建议）
+* 2017/8/18 [增强]预定义了磁贴.content.cover和.content.detail类，让其拥有鼠标经过的翻页动画
+* 2017/8/15 [优化]提高了通用背景色css的优先级；优化菜单图标大小与位置；三种代码脚手架(懒人必备)
+* 2017/8/07 [修复]修复了在小屏幕下打开自定义网页不会全屏的bug
 * 2017/8/05 [增强]openUrl函数现在第三个参数可以自定义窗口的打开大小和位置了！
 * 2017/8/05 [微调]win10.child.js增加了常用函数openUrl,父级对象句柄由Win10改名为Win10_parent;增加了一个紫色的css;优化内存释放
 * 2017/8/02 [增强]右键菜单

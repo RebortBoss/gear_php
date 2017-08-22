@@ -107,15 +107,15 @@
     </div>
     <div id="win10-menu" class="hidden">
         <div class="list win10-menu-hidden animated animated-slideOutLeft">
-            <div class="item"><span class=" icon fa fa-gavel fa-fw"></span><?= lang("脚手架","Scaffold") ?></div>
+            <div class="item"><span class=" icon fa fa-gavel fa-fw blue"></span><?= lang("脚手架","Scaffold") ?></div>
             <div class="sub-item" onclick="Win10.openUrl('<?=url_based('scaffold/module')?>','<?= lang("生成模块","Module Builder") ?>')"><?= lang("生成模块","Module Builder") ?></div>
             <div class="sub-item" onclick="Win10.openUrl('<?=url_based('scaffold/ctrl')?>','<?= lang("生成控制器","Controller Builder") ?>')"><?= lang("生成控制器","Controller Builder") ?></div>
-            <div class="item"><span class=" icon fa fa-wrench fa-fw"></span><?= lang("系统工具","System Tools") ?></div>
+            <div class="item"><span class=" icon fa fa-wrench fa-fw orange"></span><?= lang("系统工具","System Tools") ?></div>
             <div class="sub-item" onclick="Win10.openUrl('<?=url('plugin/logger')?>','<?= lang("查看日志","Read Logs") ?>')"><?= lang("查看日志","Read Logs") ?></div>
             <div class="sub-item" onclick="Win10.openUrl('<?=url('plugin/envCheck')?>','<?= lang("环境检测","Env CHeck") ?>')"><?= lang("环境检测","Env CHeck") ?></div>
             <div class="sub-item" onclick="Win10.openUrl('<?=url('plugin/admin',['action'=>'psw'])?>','<?= lang("修改密码","Change Password") ?>')"><?= lang("修改密码","Change Password") ?></div>
-            <div class="item" onclick="layer.confirm('<?= lang("确认要注销吗?您将不再是Gear PHP的管理员","Are you sure you want to logout? You will no longer be an administrator for Gear PHP.") ?>', {icon: 3, title:'<?= lang("提示","Attention") ?>'}, function(index){window.location.href='<?=url('plugin/admin',['action'=>'logout'])?>';layer.close(index);});"><span class=" icon fa fa-user-o fa-fw"></span><?= lang("注销","Logout") ?></div>
-            <div class="item" onclick="layer.confirm('<?= lang("确认要关闭本页吗?","Are you sure you want to close this page?") ?>', {icon: 3, title:'<?= lang("提示","Attention") ?>'}, function(index){Win10.exit();layer.close(index);});"><span class=" icon fa fa-window-close fa-fw"></span><?= lang("退出","Exit") ?></div>
+            <div class="item" onclick="layer.confirm('<?= lang("确认要注销吗?您将不再是Gear PHP的管理员","Are you sure you want to logout? You will no longer be an administrator for Gear PHP.") ?>', {icon: 3, title:'<?= lang("提示","Attention") ?>'}, function(index){window.location.href='<?=url('plugin/admin',['action'=>'logout'])?>';layer.close(index);});"><span class=" icon fa fa-user-o fa-fw red"></span><?= lang("注销","Logout") ?></div>
+            <div class="item" onclick="layer.confirm('<?= lang("确认要关闭本页吗?","Are you sure you want to close this page?") ?>', {icon: 3, title:'<?= lang("提示","Attention") ?>'}, function(index){Win10.exit();layer.close(index);});"><span class=" icon fa fa-window-close fa-fw black"></span><?= lang("退出","Exit") ?></div>
         </div>
         <div class="blocks">
             <div class="menu_group">

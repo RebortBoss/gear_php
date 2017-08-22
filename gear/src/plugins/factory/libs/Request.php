@@ -136,6 +136,7 @@ class Request
 
     /**
      * 获得路由参数
+     * @ 提示：参数首字符是^则不进行urldecode转义
      * @return array
      */
     public function urlParams()
@@ -217,6 +218,7 @@ class Request
         return \Yuri2::getIp();
     }
 
+    /** 获取主机名 */
     public function getHost(){
         return \Yuri2::getHost();
     }

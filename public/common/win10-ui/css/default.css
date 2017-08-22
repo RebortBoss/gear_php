@@ -9,7 +9,7 @@ body {
     overflow: hidden;
 }
 
-#win10 * {
+#win10 *{
     -webkit-user-select:none;
     -moz-user-select:none;
     -ms-user-select:none;
@@ -91,7 +91,7 @@ body {
 
 #win10_btn_group_middle{
     float: left;
-    width: calc(100% - 240px);
+    width:calc(100% - 240px);
     overflow: auto;
 }
 #win10_btn_group_middle .btn_close{
@@ -163,7 +163,7 @@ body {
 #win10-menu {
     position: fixed;
     bottom: 41px;
-    background-color: rgba(19, 23, 28, 0.81);
+    background-color: rgba(19,23,28,0.81);
     height: 60%;
     width: 75%;
     max-width: 880px;
@@ -238,12 +238,16 @@ body {
     width: calc(100% - 20px);
 }
 
-#win10-menu .list .item > .icon, #win10-menu .list .sub-item > .icon, .sub-item > .icon {
-    line-height: 40px;
-    font-size: 26px;
+#win10-menu .list .item>.icon,#win10-menu .list .sub-item>.icon,.sub-item>.icon{
+    line-height: 36px;
+    font-size: 22px;
     float: left;
     margin-right: 0.5em;
-    width: 30px;
+    width: 36px;
+    position: relative;
+    top:2px;
+    background-color: grey;
+
 }
 
 #win10-menu .list .sub-item{
@@ -252,7 +256,7 @@ body {
 }
 
 #win10-menu .list .item:hover,.sub-item:hover{
-    background-color: rgba(72, 72, 72, 0.58);
+    background-color: rgba(72,72,72,0.58);
     cursor: pointer;
 }
 
@@ -320,6 +324,19 @@ body {
     height: calc(100% + 4px);
     position: absolute;
     left: -2px;top: -2px;
+    overflow: hidden;
+    transition: left 0.5s;
+}
+
+#win10-menu .menu_group .block:hover .content.cover{
+    left: calc(-100% - 4px);
+}
+
+#win10-menu .menu_group .block .content.detail{
+    left: calc(100% + 4px);
+}
+#win10-menu .menu_group .block:hover .content.detail{
+    left: -2px;
 }
 
 #win10-menu .menu_group .block:hover  {
@@ -345,7 +362,7 @@ body {
     background-color: rgba(255, 255, 255, 0.11);
 }
 
-#win10 #win10-shortcuts .shortcut > .icon {
+#win10 #win10-shortcuts .shortcut>.icon {
     width: 50px;
     height: 50px;
     overflow: hidden;
@@ -376,7 +393,7 @@ body {
     right: 0;
     bottom: 41px;
     width: 350px;
-    background-color: rgba(19, 23, 28, 0.81);
+    background-color: rgba(19,23,28,0.81);
     height: calc(100% - 42px);
     transition: all 0.5s;
     overflow-x: hidden;
@@ -465,8 +482,7 @@ body {
 #win10_command_center .msgs .msg:hover .title{
     color: white;
 }
-
-#win10_command_center .msgs .msg:hover > .btn_close_msg {
+#win10_command_center .msgs .msg:hover>.btn_close_msg{
     color: grey;
 }
 
@@ -480,7 +496,7 @@ body {
     line-height: 28px;
 }
 
-#win10_command_center .msgs .msg > .btn_close_msg {
+#win10_command_center .msgs .msg>.btn_close_msg{
     cursor: pointer;
     color: transparent;
     padding: 3px;
@@ -489,7 +505,7 @@ body {
     right: 11px;
 }
 
-#win10_command_center .msgs .msg > .btn_close_msg:hover {
+#win10_command_center .msgs .msg>.btn_close_msg:hover{
     color: white;
 }
 
@@ -504,7 +520,7 @@ body {
     box-sizing: border-box;
     height: inherit;
     max-width: 140px;
-    border-bottom: 4px solid #707070;
+    border-bottom:4px solid #707070;
     line-height: 40px;
     color: white;
     text-align: center;
@@ -523,12 +539,12 @@ body {
     cursor: pointer;
 }
 
-.win10-open-iframe {
+.win10-open-iframe{
     background-color: transparent;
     border: 1px solid #323232;
 }
 
-.win10-open-iframe .layui-layer-content {
+.win10-open-iframe .layui-layer-content{
     background-color: white;
     max-height: calc(100% - 42px);
 }
@@ -554,49 +570,40 @@ body {
     color: rgb(255, 255, 255);
 }
 
-.win10-open-iframe .layui-layer-min cite {
-    display: none;
-}
-
-.win10-open-iframe .layui-layer-max:hover {
-    background-image: none
-}
-
-.win10-open-iframe .layui-layer-max, .layui-layer-maxmin {
-    background: none
-}
-
-.win10-open-iframe .layui-layer-setwin a.layui-layer-close1:hover {
-    background: red;
-    color: #fff;
+.win10-open-iframe .layui-layer-min cite{display: none;}
+.win10-open-iframe .layui-layer-max:hover{background-image:none}
+.win10-open-iframe .layui-layer-max,.layui-layer-maxmin{background:none}
+.win10-open-iframe .layui-layer-setwin a.layui-layer-close1:hover{
+    background:red;
+    color: #fff ;
     opacity: 1;
 }
 
-.win10-open-iframe .layui-layer-min::before {
-    content: "\f2d1";
+.win10-open-iframe .layui-layer-min::before{
+    content:"\f2d1";
     color: white;
     font: normal normal normal 14px/1 FontAwesome;
 }
 
-.win10-open-iframe .layui-layer-max::before {
-    content: "\f2d0";
+.win10-open-iframe .layui-layer-max::before{
+    content:"\f2d0";
     color: white;
     font: normal normal normal 14px/1 FontAwesome;
 }
 
-.win10-open-iframe .layui-layer-maxmin.layui-layer-max::before {
-    content: "\f2d2";
+.win10-open-iframe .layui-layer-maxmin.layui-layer-max::before{
+    content:"\f2d2";
     color: white;
     font: normal normal normal 14px/1 FontAwesome;
 }
 
-.win10-open-iframe .layui-layer-close::before {
-    content: "\f2d3";
+.win10-open-iframe .layui-layer-close::before{
+    content:"\f2d3";
     color: #fff;
     font: normal normal normal 14px/1 FontAwesome;
 }
 
-.win10-open-iframe .layui-layer-min, .layui-layer-close, .layui-layer-max {
+.win10-open-iframe .layui-layer-min,.layui-layer-close,.layui-layer-max{
     text-decoration: none;
 }
 
@@ -605,62 +612,16 @@ body {
     outline: none;
     resize: none;
 }
-
 /*右键菜单*/
-#win10 .win10-context-menu {
-    left: 0;
-    top: 0;
-    position: fixed;
-    width: 150px;
-    height: auto;
-    background-color: rgb(255, 255, 255);
-    border: #CCC 1px solid;
-    display: block;
-    border-radius: 5px;
-    z-index: 99999999;
-}
-
-#win10 .win10-context-menu ul {
-    margin: 0px;
-    padding: 0px;
-}
-
-#win10 .win10-context-menu ul li {
-    transition: background-color 0.5s;
-    cursor: default;
-    padding: 0px 1em;
-    list-style: none;
-    line-height: 30px;
-    height: 30px;
-    margin: 3px 0;
-    font-size: 13px;
-}
-
-#win10 .win10-context-menu ul li:hover {
-    background-color: #DDD;
-}
-
-#win10 .win10-context-menu ul li a {
-    text-decoration: none;
-    display: block;
-    height: 100%;
-    color: #333;
-    outline: none;
-}
-
-#win10 .win10-context-menu ul hr {
-    margin: 0;
-    height: 0px;
-    border: 0px;
-    border-bottom: rgb(233, 233, 233) 1px solid;
-    border-top: none
-}
+#win10 .win10-context-menu { left: 0;top: 0;position: fixed; width: 150px; height: auto; background-color: rgb(255, 255, 255); border: #CCC 1px solid; display: block; border-radius: 5px; z-index: 99999999; }
+#win10 .win10-context-menu ul { margin: 0px; padding: 0px; }
+#win10 .win10-context-menu ul li {transition: background-color 0.5s;cursor: default;padding: 0px 1em; list-style: none; line-height: 30px; height: 30px; margin: 3px 0;  font-size: 13px; }
+#win10 .win10-context-menu ul li:hover { background-color: #DDD; }
+#win10 .win10-context-menu ul li a {text-decoration: none; display: block; height: 100%; color: #333; outline: none; }
+#win10 .win10-context-menu ul hr { margin: 0; height: 0px; border: 0px; border-bottom: rgb(233,233,233) 1px solid;border-top: none }
 
 /*块级按钮*/
-.win10-open-iframe .layui-layer-ico {
-    background-image: none;
-}
-
+.win10-open-iframe .layui-layer-ico{background-image:none;}
 .win10-open-iframe .layui-layer-setwin {
     position: absolute;
     right: 0px;
@@ -668,22 +629,20 @@ body {
     font-size: 0;
     line-height: 40px;
     height: 40px;
+    background-color: rgba(49, 49, 50, 0.94);
 }
-
 .win10-open-iframe .layui-layer-setwin a {
     position: relative;
-    width: 40px;
+    width: 30px;
     height: 40px;
     font-size: 13px;
     text-align: center;
     overflow: hidden;
 }
-
 .win10-open-iframe .layui-layer-setwin a:hover {
     background: #5d5d5d;
 }
-
-.win10-open-iframe .layui-layer-title .icon, #win10_btn_group_middle .btn_title .icon {
+.win10-open-iframe .layui-layer-title .icon ,#win10_btn_group_middle .btn_title .icon{
     font-size: 15px;
     padding: 1px;
     width: 20px;
@@ -694,49 +653,30 @@ body {
     text-align: center;
     margin-right: 0.5em;
 }
-
-.win10-open-iframe .layui-layer-title img.icon, #win10_btn_group_middle .btn_title img.icon {
+.win10-open-iframe .layui-layer-title img.icon,#win10_btn_group_middle .btn_title img.icon{
     width: 20px;
     position: relative;
-    top: 5px;
+    top:5px ;
     margin-right: 0.5em;
 }
 
-#win10-menu > .list > .sub-item img.icon, #win10-menu > .list > .item img.icon {
-    width: 30px;
+#win10-menu>.list>.sub-item img.icon,#win10-menu>.list>.item img.icon{
+    width: 36px;
+    height:36px;
     position: relative;
-    top: 5px;
+    top:2px ;
     margin-right: 0.5em;
 }
 
 /*各种颜色 具体效果见 https://www.kancloud.cn/qq85569256/xzui/350010*/
-.black-green {
-    background: #009688
-}
-
-.green {
-    background: #5FB878
-}
-
-.black {
-    background: #393D49
-}
-
-.blue {
-    background: #1E9FFF
-}
-
-.orange {
-    background: #F7B824
-}
-
-.red {
-    background: #FF5722
-}
-
-.dark {
-    background: #2F4056
-}
+.win10-open-iframe .black-green, #win10 .black-green{background:#009688!important;}
+.win10-open-iframe .green,#win10 .green{background:#5FB878!important;}
+.win10-open-iframe .black,#win10 .black{background:#393D49!important;}
+.win10-open-iframe .black,#win10 .blue{background:#1E9FFF!important;}
+.win10-open-iframe .orange,#win10 .orange{background:#F7B824!important;}
+.win10-open-iframe .red,#win10 .red{background:#FF5722!important;}
+.win10-open-iframe .dark,#win10 .dark{background:#2F4056!important;}
+.win10-open-iframe .purple,#win10 .purple{background:#b074e6!important;}
 @media screen and (max-width:768px){
     #win10-menu{
         width:calc(100% - 10px);
@@ -764,7 +704,7 @@ body {
         height: 100%;
         min-width: 4px;
         padding: 0 10px;
-        font-size: 16px !important;
+        font-size: 16px!important;
     }
     #win10_btn_show_desktop {
         border-left: grey 1px solid;
@@ -776,10 +716,9 @@ body {
         max-width:100px;
     }
     #win10_btn_group_middle{
-        width: calc(100% - 160px);
+        width:calc(100% - 160px);
     }
-
-    #win10_btn_group_middle .btn {
+    #win10_btn_group_middle .btn{
         padding: 0 3px;
     }
     #win10_btn_group_right{
@@ -818,7 +757,6 @@ body {
     #win10_btn_group_middle .btn_close{
         display: none;
     }
-
     .win10-open-iframe .layui-layer-setwin a {
         width: 32px;
     }

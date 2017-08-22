@@ -143,6 +143,7 @@
                             }
                             $flag_found=false;//已经发现目标文件的标志（之前的错误处理trace不该被纪录）
                             $trace_index=0;
+                            echo "<tr><td colspan='2'>&nbsp;</td></tr>";
                             foreach ($error['trace'] as $trace){
                                 if ($flag_found or (isset($trace['file']) and $trace['file']==$error['file'] and $trace['line']=$error['line'])){
                                     $flag_found=true;
