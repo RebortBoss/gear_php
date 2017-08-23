@@ -20,10 +20,12 @@ class Main extends Plugin
     protected function getConfigFilePath(){return __DIR__ . '/config.php';}
 
     protected $rules=[];
+    protected $binds=[];
 
     public function main()
     {
         //加载路由解析特殊规则
+        RouteSpecial::setBinds($this->binds);
         RouteSpecial::setRules($this->rules);
 
         Event::bindListener(Route::EVENT_BEFORE_FORMAT_RES,function (Event $event){
@@ -38,7 +40,9 @@ class Main extends Plugin
             }else{
                 $rs=new RouteSpecial();
                 $rs->setRes($info);
-                $event['info']=$rs->getAlias();
+                $rs->checkDomainToModule();
+                $rs->checkAlias();
+                $event['info']=$rs->getRes();
             }
         });
 
@@ -47,7 +51,9 @@ class Main extends Plugin
             $url=$event['url'];
             $rs=new RouteSpecial();
             $rs->setRes($url);
-            $event['url']=$rs->getAlias();
+            $rs->checkModuleToDomain();
+            $rs->checkAlias();
+            $event['url']=$rs->getRes();
         });
 
         return true;

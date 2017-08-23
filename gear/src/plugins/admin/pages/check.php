@@ -1,7 +1,8 @@
 <?php
 namespace src\plugins\admin;
 use src\cores\Event;
-use src\plugins\cookie\Cookie;
+use src\plugins\factory\libs\Cookie;
+use src\plugins\factory\libs\Session;
 use src\traits\Ctrl;
 /**
  * Created by PhpStorm.
@@ -42,7 +43,7 @@ if (md5(request('psw'))===$psw){
     if (request('rem')=='yes'){
         $cookie->setCookie('isAdmin',true);
     }
-    /** @var $session \src\plugins\session\Session */
+    /** @var $session Session */
     $session->offsetSet('isAdmin',true);
     maker()->sender()->success(lang('登录成功！','Login successful!'),request('jump'),3);
 }else{

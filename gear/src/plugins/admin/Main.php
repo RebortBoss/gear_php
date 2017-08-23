@@ -5,6 +5,7 @@ namespace src\plugins\admin;
 
 use src\cores\Event;
 use src\cores\Factory;
+use src\cores\PluginManager;
 use src\traits\Plugin;
 
 /** gear 管理员 */
@@ -37,6 +38,7 @@ class Main extends Plugin
         $action=request('action');
         $page=__DIR__.DS.'pages'.DS.$action.'.php';
         if (is_file($page)){
+            PluginManager::initPlugin('captcha'); //验证码插件是必须的
             require $page;
         }else{
             maker()->sender()->error('Can not access this action.','back');

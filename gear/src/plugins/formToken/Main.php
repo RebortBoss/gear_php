@@ -37,6 +37,7 @@ class Main extends Plugin
                     $token_value=$v;
                     $s=maker()->session()->setPrefix('plugin.formToken');
                     $tokens=$s[''];
+                    if(!is_array($tokens)){$tokens=[];}
                     foreach ($tokens as $kk=>$vv){
                         if ($kk==$token_key and $vv==$token_value){
                             //bingo
