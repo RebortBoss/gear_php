@@ -71,10 +71,10 @@ class Scaffold extends Ctrl
                             $action_content.=RN."    public function $action()\r\n    {\r\n        //\$this->render();    \r\n    }\r\n ";
                             $view_file=$dir_module.'/views/'.$ctrl_name.'/'.$action.'.php';
                             if (!is_file($view_file)){
-                                $view_content="[extend tpl/base_element]
-<block_title>$action</block_title>
-<block_head> </block_head>
-<block_body> </block_body>";
+                                $view_content="<gear-extend>tpl/base_element</gear-extend>
+<gear-block-title>$action</gear-block-title>
+<gear-block-head> </gear-block-head>
+<gear-block-body> </gear-block-body>";
                                 maker()->file()->writeFile($view_file,$view_content);
                             }
                         }

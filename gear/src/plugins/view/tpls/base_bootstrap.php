@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <title>
-        <block_title>模板页</block_title>
+        <gear-block-title>模板页</gear-block-title>
     </title>
-    <block_ico>
+    <gear-block-ico>
         <?=V::import('common/img/gear.ico')?>
-    </block_ico>
+    </gear-block-ico>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <?php if (Yuri2::isOldIE()) { ?>
         <script type="text/javascript" src="__PUBLIC__/common/js/jquery-1.11.3.min.js"></script>
@@ -38,10 +38,10 @@
     <script type="text/javascript" src="__PUBLIC__/common/bootstrap3/js/bootstrap-datetimepicker.zh-CN.js"></script>
 
 
-    <block_head></block_head>
+    <gear-block-head></gear-block-head>
 </head>
 <body>
-<block_body>
+<gear-block-body>
     <div class="container">
         <div class="row">
             <div class="jumbotron" style="background-color: white">
@@ -55,6 +55,6 @@
             </div>
         </div>
     </div>
-</block_body>
+</gear-block-body>
 </body>
 </html>

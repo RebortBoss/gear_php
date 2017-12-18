@@ -1,8 +1,8 @@
-[extend tpl/base_bootstrap]
-<block_title>
+<gear-extend>tpl/base_bootstrap</gear-extend>
+<gear-block-title>
     Gear
-</block_title>
-<block_body>
+</gear-block-title>
+<gear-block-body>
     <div class="container" style="padding-top: 50px">
         <form id="frm" action="<?= url(url_info('curd', ['action' => 'create'])) ?>" method="get" role="form">
             <legend>Create CURD</legend>
@@ -78,4 +78,4 @@
             })
         })
     </script>
-</block_body>
+</gear-block-body>

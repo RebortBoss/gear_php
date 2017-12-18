@@ -21,11 +21,26 @@ TODO
 
 * 移除notorm
 * model脚手架
-* element ui 调试
 
 
 更新日志
 --------------------
+
+[2017/11/18]
+
+ * 引入element-ui 2.0.8
+
+[2017/11/17]
+
+ * 为UE渲染项添加了一个var，渲染结果：`var $var=.....`
+
+[2017/9/11]
+
+ * 修复了一个安全风险(isLocal函数)
+
+[2017/9/1]
+
+ * view的关键字include和extend 改为 <gear-xxx>...</gear-xxx>形式,block关键字改为<gear-block-xxx>形式
 
 [2017/8/23]
 

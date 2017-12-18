@@ -26,10 +26,16 @@ class V
         return self::import('common/bootstrap3/js/bootstrap.min.js')
              . self::import('common/bootstrap3/css/bootstrap.min.css');
     }
-    public static function import_rs_element_ui(){
-        return self::import('common/element-ui/themes/default.css')
-             . self::import('common/element-ui/themes/default/color.css')
-             . self::import('common/element-ui/element.js');
+    public static function import_rs_element_ui($v='1.4.2'){
+        switch ($v){
+            case '1.4.2':
+                return self::import("common/element-ui-v1.4.2/lib/theme-default/color.css")
+                    . self::import("common/element-ui-v1.4.2/lib/theme-default/index.css")
+                    . self::import("common/element-ui-v1.4.2/lib/index.js");
+            case '2.0.8':
+                return self::import("common/element-ui-v2.0.8/index.css")
+                    . self::import("common/element-ui-v2.0.8/index.js");
+        }
     }
     public static function import_rs_jq_ui(){
         return self::import('common/jquery-ui-1.12.1/jquery-ui.theme.css')

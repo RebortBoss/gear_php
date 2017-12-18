@@ -1,8 +1,8 @@
-[extend tpl/base_bootstrap]
-<block_title><?= lang("网站地图","WebsiteMap") ?></block_title>
-<block_head> </block_head>
-<block_body>
-    [include tpl/inc_nav_bar]
+<gear-extend>tpl/base_bootstrap</gear-extend>
+<gear-block-title><?= lang("网站地图","WebsiteMap") ?></gear-block-title>
+<gear-block-head> </gear-block-head>
+<gear-block-body>
+    <gear-include>tpl/inc_nav_bar</gear-include>
     <div class="container-fluid" id="box-map" style="padding-top: 40px">
         <?php foreach ($modules as $module){?>
         <div class="panel panel-primary maps">
@@ -73,4 +73,4 @@
             });
         })
     </script>
-</block_body>
+</gear-block-body>

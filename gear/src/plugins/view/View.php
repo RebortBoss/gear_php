@@ -9,7 +9,7 @@
 namespace src\plugins\view;
 
 
-use src\plugins\file\File;
+use src\plugins\factory\libs\File;
 use src\traits\Base;
 
 class View extends Base
@@ -85,20 +85,20 @@ class View extends Base
     private function extend($page_content)
     {
         $counter = 100;
-        $preg_extend = '/^\[extend ([\w\\/]+)\]/'; //寻找extend标记的正则
+        $preg_extend = '/^<gear-extend>([\w\/]+)<\/gear-extend>/'; //寻找extend标记的正则
         while (preg_match($preg_extend, $page_content, $matches)) {
             if ($counter-- < 0) {
                 throw new \Exception(self::LANG_ERROR_TOO_MUCH_REPLACE);
             }
             $extend_res = $matches[1];//父级模板的res
             $extend_content = $this->getViewFileContent($extend_res);
-            $preg_block = '/<block_(\w+)>/';
+            $preg_block = '/<gear\-block\-([\w\-]+)>/';
             while (preg_match($preg_block, $extend_content, $matches)) {
                 if ($counter-- < 0) {
                     throw new \Exception(self::LANG_ERROR_TOO_MUCH_REPLACE);
                 }
                 $p_block_name = $matches[1];
-                $preg_block_target = "/<block_$p_block_name>([\\s\\S]*)<\\/block_$p_block_name>/";
+                $preg_block_target = "/<gear\-block\-$p_block_name>([\s\S]*)<\/gear\-block\-$p_block_name>/";
                 preg_match($preg_block_target, $extend_content, $matches);
                 $p_block = $matches[0];
                 $p_block_inner = $matches[1];
@@ -106,19 +106,19 @@ class View extends Base
                 //从子模板寻找对应的block
                 if (preg_match($preg_block_target, $page_content, $matches)) {
                     $c_block_inner = $matches[1];
-                    $extend_content = str_replace($p_block, "<_block_$p_block_name>" . $c_block_inner . "</_block_$p_block_name>", $extend_content);
+                    $extend_content = str_replace($p_block, "<_gear-block-$p_block_name>" . $c_block_inner . "</_gear-block-$p_block_name>", $extend_content);
                 } else {
-                    $extend_content = str_replace($p_block, "<_block_$p_block_name>" . $p_block_inner . "</_block_$p_block_name>", $extend_content);
+                    $extend_content = str_replace($p_block, "<_gear-block-$p_block_name>" . $p_block_inner . "</_gear-block-$p_block_name>", $extend_content);
                 }
             }
             //将临时的_block 变为正常的block
-            $extend_content = str_replace("<_block_", '<block_', $extend_content);
-            $extend_content = str_replace("</_block_", '</block_', $extend_content);
+            $extend_content = str_replace("<_gear-block-", '<gear-block-', $extend_content);
+            $extend_content = str_replace("</_gear-block-", '</gear-block-', $extend_content);
             $page_content = $extend_content;
         }
 
         //去掉所有的block外部标签
-        $page_content = preg_replace('/<\\/?block_\w+>/', '', $page_content);
+        $page_content = preg_replace('/<\/?gear\-block\-[\w\-]+>/', '', $page_content);
         return $page_content;
 
     }
@@ -129,7 +129,7 @@ class View extends Base
      */
     private function inc($page_content)
     {
-        $preg_inc = '/\[include ([\w\\/]+)\]/'; //寻找include标记的正则
+        $preg_inc = '/<gear\-include>([\w\\/]+)<\/gear\-include>/'; //寻找include标记的正则
         while (preg_match($preg_inc, $page_content, $matches)) {
             $inc_self = $matches[0];//待引用模板的res
             $inc_res = $matches[1];//待引用模板的res

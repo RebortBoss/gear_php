@@ -1,7 +1,7 @@
-[extend tpl/base_bootstrap]
-<block_title><?=lang('收藏夹','Favorites')?></block_title>
+<gear-extend>tpl/base_bootstrap</gear-extend>
+<gear-block-title><?=lang('收藏夹','Favorites')?></gear-block-title>
 
-<block_head>
+<gear-block-head>
     <!--head-->
     <style>
         body {
@@ -25,9 +25,9 @@
             display: inline-block
         }
     </style>
-</block_head>
+</gear-block-head>
 
-<block_body>
+<gear-block-body>
     <div class="container">
         <div class="row">
             <div class="jumbotron" style="background-color:transparent">
@@ -101,4 +101,4 @@
             });
         });
     </script>
-</block_body>
+</gear-block-body>

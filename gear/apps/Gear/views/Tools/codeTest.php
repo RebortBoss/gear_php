@@ -1,6 +1,6 @@
-[extend tpl/base_bootstrap]
-<block_title><?= lang("代码测试","Code Test") ?></block_title>
-<block_head>
+<gear-extend>tpl/base_bootstrap</gear-extend>
+<gear-block-title><?= lang("代码测试","Code Test") ?></gear-block-title>
+<gear-block-head>
     <?= V::import('common/codemirror-5.2/lib/codemirror.css') ?>
     <?= V::import('common/codemirror-5.2/lib/codemirror.js') ?>
     <?= V::import('common/codemirror-5.2/addon/edit/matchbrackets.js') ?>
@@ -10,8 +10,8 @@
     <?= V::import('common/codemirror-5.2/mode/css/css.js') ?>
     <?= V::import('common/codemirror-5.2/mode/clike/clike.js') ?>
     <?= V::import('common/codemirror-5.2/mode/php/php.js') ?>
-</block_head>
-<block_body>
+</gear-block-head>
+<gear-block-body>
     <style>
         .CodeMirror{min-height: 500px;border: 1px solid gray;}
         #ifrm{min-height: 500px;border: 1px solid gray;width: 100%}
@@ -95,4 +95,4 @@
         });
 
     </script>
-</block_body>
+</gear-block-body>

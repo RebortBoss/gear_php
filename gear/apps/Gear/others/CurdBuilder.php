@@ -141,13 +141,13 @@ class " . $this->data['ctrl_name'] . " extends Model
     </th>" . RN;
             $tds .= "    <td>{{row.data.$field}}</td>" . RN;
         }
-        $content = "[extend Gear/CurdBuilder/lists]
-<block_ths>
+        $content = "<gear-extend>Gear/CurdBuilder/lists</gear-extend>
+<gear-block-ths>
 $ths
-</block_ths>
-<block_tds>
+</gear-block-ths>
+<gear-block-tds>
 $tds
-</block_tds>
+</gear-block-tds>
         ";
         $file = $this->viewsFilePrefix . '/lists.php';
         if (is_file($file)){
@@ -167,10 +167,10 @@ $tds
                         <td><?=V::displayVar(\$row['$field'])?></td>
                     </tr>" . RN;
         }
-        $content = '[extend tpl/base_bootstrap]
-<block_title><?=V::displayVar($model_alias)?> 详情(detail)</block_title>
-<block_head> </block_head>
-<block_body>
+        $content = '<gear-extend>Gear/CurdBuilder/lists</gear-extend>
+<gear-block-title><?=V::displayVar($model_alias)?> 详情(detail)</gear-block-title>
+<gear-block-head> </gear-block-head>
+<gear-block-body>
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -198,7 +198,7 @@ $tds
             </div>
         </div>
     </div>
-</block_body>';
+</gear-block-body>';
         $file = $this->viewsFilePrefix . '/detail.php';
         if (is_file($file)){
             $this->fileState[$file]=false;
@@ -222,11 +222,11 @@ $tds
                     </div>" . RN;
             $valis .= "                $field:<?=V::displayVar(\$fields['$field']['verify'][0],'/^.*?$/')?> ," . RN;
         }
-        $content = '[extend tpl/base_bootstrap]
-<block_title><?= V::displayVar($model_alias) ?> 创建(Create)</block_title>
-<block_head>
-</block_head>
-<block_body>
+        $content = '<gear-extend>Gear/CurdBuilder/lists</gear-extend>
+<gear-block-title><?= V::displayVar($model_alias) ?> 创建(Create)</gear-block-title>
+<gear-block-head>
+</gear-block-head>
+<gear-block-body>
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -259,7 +259,7 @@ $tds
             }
         });
     </script>
-</block_body>';
+</gear-block-body>';
 
         $file = $this->viewsFilePrefix . '/create.php';
         if (is_file($file)){
@@ -285,11 +285,11 @@ $tds
                     </div>" . RN;
             $valis .= "                $field:<?=V::displayVar(\$fields['$field']['verify'][0],'/^.*?$/')?> ," . RN;
         }
-        $content = '[extend tpl/base_bootstrap]
-<block_title><?= V::displayVar($model_alias) ?> 修改(Update)</block_title>
-<block_head>
-</block_head>
-<block_body>
+        $content = '<gear-extend>Gear/CurdBuilder/lists</gear-extend>
+<gear-block-title><?= V::displayVar($model_alias) ?> 修改(Update)</gear-block-title>
+<gear-block-head>
+</gear-block-head>
+<gear-block-body>
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -322,7 +322,7 @@ $tds
             }
         });
     </script>
-</block_body>';
+</gear-block-body>';
 
         $file = $this->viewsFilePrefix . '/update.php';
         if (is_file($file)){

@@ -49,7 +49,7 @@
     </script>
 </head>
 <body>
-<block_body>
+<gear-block-body>
     <div class="container">
         <div class="panel panel-primary" style="margin-top: 20px">
             <!-- Default panel contents -->
@@ -163,6 +163,6 @@
             <?php } ?>
         <?php } ?>
     </div>
-</block_body>
+</gear-block-body>
 </body>
 </html>

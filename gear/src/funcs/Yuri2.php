@@ -467,14 +467,15 @@ class Yuri2
 
     /**
      * 根据当前域名判断是否是本地环境
+     * @return bool
      */
     public static function isLocal()
     {
         if (self::isCached('isLocal')) {
             return self::useCache('isLocal');
         }
-        $host = self::getHost();
-        $rel = ($host == 'localhost' or $host == '127.0.0.1') ? true : false;
+        $ip = self::getIp();
+        $rel = $ip==='::1' or $ip==='127.0.0.1';
         self::useCache('isLocal', $rel);
         return $rel;
     }
@@ -2210,7 +2211,7 @@ class Yuri2
         if(preg_match("~^(magnet|thunder|flashget|[fht]+p):~",$url,$tmp)){
             return $url;
         }
-        $base=preg_replace("~/[^/]+\.\w+$~","",$base);//去掉最后一层 /xxx 相当于取父级
+        $base=preg_replace("~/[^/]+$~","",$base);//去掉最后一层 /xxx 相当于取父级
         $base=preg_replace("~^\s*https?://|/\s*$~","",$base); //去掉协议头
         $roads=preg_split("~/~",$base); //分割
         $host=$roads[0];

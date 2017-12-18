@@ -1,7 +1,7 @@
-[extend tpl/base_bootstrap]
-<block_title>index</block_title>
-<block_head></block_head>
-<block_body>
+<gear-extend>tpl/base_bootstrap</gear-extend>
+<gear-block-title>index</gear-block-title>
+<gear-block-head></gear-block-head>
+<gear-block-body>
     <div class="container" style="padding-top: 50px">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -112,4 +112,4 @@
             })
         })
     </script>
-</block_body>
+</gear-block-body>

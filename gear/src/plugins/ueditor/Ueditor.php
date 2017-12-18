@@ -232,13 +232,13 @@ class Ueditor
     public function getInitHtml($configs)
     {
         $params=[
+            'var'=>'ue',
             'id'=>'ueditor',
             'name'=>'ueditor',
             'content'=>'',
             'toolbars'=>'normal',
             'width'=>'100%',
             'height'=>'160',
-            'config'=>'', //服务端配置项名（预先配置）
         ];
         $params=array_merge($params,$configs);
 
@@ -258,7 +258,7 @@ class Ueditor
         }
         $config = [
             'toolbars'=>$toolbars,
-            'serverUrl'=>url('plugin/ueditor', ['id' => $params['id'],'config'=>$params['config'],'token'=>order_token(3600*6,'ue')]),
+            'serverUrl'=>url('plugin/ueditor', ['id' => $params['id']]),
             'initialFrameWidth'=>$params['width'],
             'initialFrameHeight'=>$params['height'],
         ];
@@ -268,7 +268,7 @@ class Ueditor
     <script id=\"{$params['id']}\" name=\"{$params['name']}\" class='ueditor' type=\"text/plain\">{$params['content']}</script>
     <!-- 实例化编辑器 -->
     <script type=\"text/javascript\">
-       UE.getEditor('{$params['id']}',$config_json);
+       var {$params['var']}=UE.getEditor('{$params['id']}',$config_json);
     </script>
         ";
     }

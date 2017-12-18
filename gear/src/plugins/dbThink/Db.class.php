@@ -40,7 +40,7 @@ class Db {
                 self::$instance[$md5]   =   new $class($options);
             }else{
                 // 类没有定义
-                ('Can not find db driver : ' . $class);
+                throw new \Exception('Can not find db driver : ' . $class);
             }
         }
         self::$_instance    =   self::$instance[$md5];

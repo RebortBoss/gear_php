@@ -1,10 +1,10 @@
-[extend tpl/base_bootstrap]
-<block_title><?=V::displayVar($model_alias)?> 列表(lists)</block_title>
-<block_head>
+<gear-extend>tpl/base_bootstrap</gear-extend>
+<gear-block-title><?=V::displayVar($model_alias)?> 列表(lists)</gear-block-title>
+<gear-block-head>
 <!--    --><?//= V::import('common/js/vue.js') ?>
-</block_head>
-<block_body>
-    <block_header></block_header>
+</gear-block-head>
+<gear-block-body>
+    <gear-block-header></gear-block-header>
     <div class="container-fluid" id="ctn">
         <div class="panel panel-primary" style="min-width: <?=V::displayVar($min_width,'1080px')?>">
             <div class="panel-heading">
@@ -86,9 +86,9 @@
                     <tr>
                         <th style="width:20px;"><input type="checkbox" v-model="all_selected" @change="select_all"></th>
                         <th style="width:120px;">操作(Action)</span></th>
-                        <block_ths>
+                        <gear-block-ths>
 
-                        </block_ths>
+                        </gear-block-ths>
 
                     </tr>
                     </thead>
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                         </td>
-                        <block_tds></block_tds>
+                        <gear-block-tds></gear-block-tds>
                     </tr>
                     </tbody>
                 </table>
@@ -183,7 +183,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <block_footer></block_footer>
+    <gear-block-footer></gear-block-footer>
     <script>
         var Model = {};
         $(function () {
@@ -329,4 +329,4 @@
             });
         });
     </script>
-</block_body>
+</gear-block-body>

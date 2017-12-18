@@ -1,7 +1,7 @@
-[extend tpl/base_bootstrap]
-<block_head>
+<gear-extend>tpl/base_bootstrap</gear-extend>
+<gear-block-head>
 
-</block_head>
-<block_body>
+</gear-block-head>
+<gear-block-body>
 
-</block_body>
+</gear-block-body>

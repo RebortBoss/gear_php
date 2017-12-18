@@ -130,13 +130,13 @@ class Dispatch extends Base
             if (config(Config::API_MODE)) {
                 switch (config(Config::API_FORMAT)) {
                     case 'json':
-                        $rel = maker()->format()->arrayToJson($rel);
+                        $rel = maker()->format()->arrayToJson($rel,JSON_UNESCAPED_UNICODE);
                         break;
                     case 'xml':
                         $rel = maker()->format()->arrayToXml($rel);
                         break;
                     case 'jsonp':
-                        $rel=request('callback').'('.maker()->format()->arrayToJson($rel).')';
+                        $rel=request('callback').'('.maker()->format()->arrayToJson($rel,JSON_UNESCAPED_UNICODE).')';
                         break;
                 }
                 echo $rel;

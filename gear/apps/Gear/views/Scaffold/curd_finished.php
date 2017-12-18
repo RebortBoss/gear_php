@@ -1,8 +1,8 @@
-[extend tpl/base_bootstrap]
-<block_title>
+<gear-extend>tpl/base_bootstrap</gear-extend>
+<gear-block-title>
     Gear
-</block_title>
-<block_body>
+</gear-block-title>
+<gear-block-body>
     <div class="container">
         <div class="jumbotron" style="background: white">
             <div class="container">
@@ -45,4 +45,4 @@
     </div>
     <script>
     </script>
-</block_body>
+</gear-block-body>
