@@ -167,6 +167,38 @@ function Base64() {
     }
 }
 
+/** 事件 */
+var Event = {
+    // 通过on接口监听事件eventName
+    // 如果事件eventName被触发，则执行callback回调函数
+    on: function (eventName, callback) {
+        //你的代码
+        if (!this.handles) {
+            //this.handles={};
+            Object.defineProperty(this, "handles", {
+                value: {},
+                enumerable: false,
+                configurable: true,
+                writable: true
+            })
+        }
+
+        if (!this.handles[eventName]) {
+            this.handles[eventName] = [];
+        }
+        this.handles[eventName].push(callback);
+    },
+    // 触发事件 eventName
+    emit: function (eventName) {
+        //你的代码
+        if (this.handles[arguments[0]]) {
+            for (var i = 0; i < this.handles[arguments[0]].length; i++) {
+                this.handles[arguments[0]][i](arguments[1]);
+            }
+        }
+    }
+};
+
 //Yuri2 助手
 var Yuri2 = {
     log: function (content) {
@@ -291,6 +323,7 @@ var Yuri2 = {
             return !((typeof (v) === 'undefined') || (v === null));
         }
     },
+    /** @deprecated */
     in_array: function (stringToSearch, arrayToSearch) {
         for (s = 0; s < arrayToSearch.length; s++) {
             thisEntry = arrayToSearch[s].toString();
@@ -299,6 +332,9 @@ var Yuri2 = {
             }
         }
         return false;
+    },
+    isArray: function (o) {
+        return Object.prototype.toString.call(o) === '[object Array]';
     },
     /**
      * 合并两个json对象属性为一个对象
@@ -314,6 +350,9 @@ var Yuri2 = {
         }
         for (var attr in jsonObject2) {
             resultJsonObject[attr] =
+                recursion === true &&
+                !this.isArray(resultJsonObject[attr]) &&
+                !this.isArray(jsonObject2[attr]) &&
                 recursion === true &&
                 typeof ( resultJsonObject[attr]) === 'object' &&
                 typeof ( jsonObject2[attr]) === 'object' ?
@@ -412,9 +451,8 @@ var Yuri2 = {
             }
         }
         script.src = url;
-        document.body.appendChild(script);
+        document.head.appendChild(script);
     },
-
     /**
      * jsonp  请求
      * @param url string
@@ -423,9 +461,9 @@ var Yuri2 = {
      * @param name_data string
      * @param name_callback string
      * */
-    jsonp: function (url, data, callback,name_data,name_callback) {
-        name_data||(name_data='data');
-        name_callback||(name_callback='callback');
+    jsonp: function (url, data, callback, name_data, name_callback) {
+        name_data || (name_data = 'data');
+        name_callback || (name_callback = 'callback');
         var func_name = Math.random();
         if (!Yuri2.jsonp_funcs) {
             Yuri2.jsonp_funcs = {};
@@ -439,16 +477,372 @@ var Yuri2 = {
         if (url.indexOf('&') > 0) {
             rel += '&';
         }
-        rel += name_callback+'=' + encodeURI('Yuri2.jsonp_funcs["' + func_name + '"]');
+        rel += name_callback + '=' + encodeURI('Yuri2.jsonp_funcs["' + func_name + '"]');
         if (data) {
             var data_str = JSON.stringify(data);
             data_str = encodeURI(data_str);
-            rel += '&'+name_data+'=' + data_str;
+            rel += '&' + name_data + '=' + data_str;
         }
         Yuri2.loadScript(rel, function (script) {
             script.parentNode.removeChild(script);
         })
 
-    }
+    },
+    heredoc: function (fn) {
+        //var tmpl = heredoc(function(){/* abcdefg  */})  可以优雅的解决多行文本问题
+        return fn.toString().split('\n').slice(1, -1).join('\n') + '\n'
+    },
+    getClientSize: function () {
+        var clientHeight = document.body.clientHeight;
+        var clientWidth = document.body.clientWidth;
+        return {
+            width: clientWidth,
+            height: clientHeight,
+        };
+    },
+    wait: function (condition, callback) {
+        var itv = setInterval(function () {
+            if (condition) {
+                clearInterval(itv);
+                callback();
+            }
+        }, 100)
+    },
+    jsonDeepCopy: function (obj) {
+        return JSON.parse(JSON.stringify(obj));
+    },
+    jsonFormat: function (json) {
+        if (typeof json !== 'object') {
+            json = JSON.parse(json);
+        }
+        var formatted = JSON.stringify(json, null, 4);
+        return formatted;
+    },
+    //保存文本文件
+    saveAs: (function (view) {
+        "use strict";
+        // IE <10 is explicitly unsupported
+        if (typeof view === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+            return;
+        }
+        var
+            doc = view.document
+            // only get URL when necessary in case Blob.js hasn't overridden it yet
+            , get_URL = function () {
+                return view.URL || view.webkitURL || view;
+            }
+            , save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a")
+            , can_use_save_link = "download" in save_link
+            , click = function (node) {
+                var event = new MouseEvent("click");
+                node.dispatchEvent(event);
+            }
+            , is_safari = /constructor/i.test(view.HTMLElement) || view.safari
+            , is_chrome_ios = /CriOS\/[\d]+/.test(navigator.userAgent)
+            , throw_outside = function (ex) {
+                (view.setImmediate || view.setTimeout)(function () {
+                    throw ex;
+                }, 0);
+            }
+            , force_saveable_type = "application/octet-stream"
+            // the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
+            , arbitrary_revoke_timeout = 1000 * 40 // in ms
+            , revoke = function (file) {
+                var revoker = function () {
+                    if (typeof file === "string") { // file is an object URL
+                        get_URL().revokeObjectURL(file);
+                    } else { // file is a File
+                        file.remove();
+                    }
+                };
+                setTimeout(revoker, arbitrary_revoke_timeout);
+            }
+            , dispatch = function (filesaver, event_types, event) {
+                event_types = [].concat(event_types);
+                var i = event_types.length;
+                while (i--) {
+                    var listener = filesaver["on" + event_types[i]];
+                    if (typeof listener === "function") {
+                        try {
+                            listener.call(filesaver, event || filesaver);
+                        } catch (ex) {
+                            throw_outside(ex);
+                        }
+                    }
+                }
+            }
+            , auto_bom = function (blob) {
+                // prepend BOM for UTF-8 XML and text/* types (including HTML)
+                // note: your browser will automatically convert UTF-16 U+FEFF to EF BB BF
+                if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
+                    return new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
+                }
+                return blob;
+            }
+            , FileSaver = function (blob, name, no_auto_bom) {
+                if (!no_auto_bom) {
+                    blob = auto_bom(blob);
+                }
+                // First try a.download, then web filesystem, then object URLs
+                var
+                    filesaver = this
+                    , type = blob.type
+                    , force = type === force_saveable_type
+                    , object_url
+                    , dispatch_all = function () {
+                        dispatch(filesaver, "writestart progress write writeend".split(" "));
+                    }
+                    // on any filesys errors revert to saving with object URLs
+                    , fs_error = function () {
+                        if ((is_chrome_ios || (force && is_safari)) && view.FileReader) {
+                            // Safari doesn't allow downloading of blob urls
+                            var reader = new FileReader();
+                            reader.onloadend = function () {
+                                var url = is_chrome_ios ? reader.result : reader.result.replace(/^data:[^;]*;/, 'data:attachment/file;');
+                                var popup = view.open(url, '_blank');
+                                if (!popup) view.location.href = url;
+                                url = undefined; // release reference before dispatching
+                                filesaver.readyState = filesaver.DONE;
+                                dispatch_all();
+                            };
+                            reader.readAsDataURL(blob);
+                            filesaver.readyState = filesaver.INIT;
+                            return;
+                        }
+                        // don't create more object URLs than needed
+                        if (!object_url) {
+                            object_url = get_URL().createObjectURL(blob);
+                        }
+                        if (force) {
+                            view.location.href = object_url;
+                        } else {
+                            var opened = view.open(object_url, "_blank");
+                            if (!opened) {
+                                // Apple does not allow window.open, see https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/WorkingwithWindowsandTabs/WorkingwithWindowsandTabs.html
+                                view.location.href = object_url;
+                            }
+                        }
+                        filesaver.readyState = filesaver.DONE;
+                        dispatch_all();
+                        revoke(object_url);
+                    }
+                ;
+                filesaver.readyState = filesaver.INIT;
+
+                if (can_use_save_link) {
+                    object_url = get_URL().createObjectURL(blob);
+                    setTimeout(function () {
+                        save_link.href = object_url;
+                        save_link.download = name;
+                        click(save_link);
+                        dispatch_all();
+                        revoke(object_url);
+                        filesaver.readyState = filesaver.DONE;
+                    });
+                    return;
+                }
+
+                fs_error();
+            }
+            , FS_proto = FileSaver.prototype
+            , saveAs = function (blob, name, no_auto_bom) {
+                return new FileSaver(blob, name || blob.name || "download", no_auto_bom);
+            }
+        ;
+        // IE 10+ (native saveAs)
+        if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
+            return function (blob, name, no_auto_bom) {
+                name = name || blob.name || "download";
+
+                if (!no_auto_bom) {
+                    blob = auto_bom(blob);
+                }
+                return navigator.msSaveOrOpenBlob(blob, name);
+            };
+        }
+
+        FS_proto.abort = function () {
+        };
+        FS_proto.readyState = FS_proto.INIT = 0;
+        FS_proto.WRITING = 1;
+        FS_proto.DONE = 2;
+
+        FS_proto.error =
+            FS_proto.onwritestart =
+                FS_proto.onprogress =
+                    FS_proto.onwrite =
+                        FS_proto.onabort =
+                            FS_proto.onerror =
+                                FS_proto.onwriteend =
+                                    null;
+
+        return saveAs;
+    }(
+        typeof self !== "undefined" && self
+        || typeof window !== "undefined" && window
+        || this.content
+    )),
+    getQueryString: function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return (r[2]);
+        return null;
+    },
+
+    /**
+     *@param {string} url 完整的URL地址
+     *@returns {object} 自定义的对象
+     *@description 用法示例：var myURL = parseURL('http://abc.com:8080/dir/index.html?id=255&m=hello#top');
+     myURL.file='index.html'
+
+     myURL.hash= 'top'
+
+     myURL.host= 'abc.com'
+
+     myURL.query= '?id=255&m=hello'
+
+     myURL.params= Object = { id: 255, m: hello }
+
+     myURL.path= '/dir/index.html'
+
+     myURL.segments= Array = ['dir', 'index.html']
+
+     myURL.port= '8080'
+
+     myURL.protocol= 'http'
+
+     myURL.source= 'http://abc.com:8080/dir/index.html?id=255&m=hello#top'
+
+     */
+    parseURL: function (url) {
+        url || (url = location.href);
+        var a = document.createElement('a');
+        a.href = url;
+        a.href = a.href; //神奇的代码，借助a标签把相对路径转换为绝对路径
+        return {
+            source: url,
+            protocol: a.protocol.replace(':', ''),
+            host: a.hostname,
+            port: a.port,
+            query: a.search,
+            params: (function () {
+                var ret = {},
+                    seg = a.search.replace(/^\?/, '').split('&'),
+                    len = seg.length, i = 0, s;
+                for (; i < len; i++) {
+                    if (!seg[i]) {
+                        continue;
+                    }
+                    s = seg[i].split('=');
+                    ret[s[0]] = s[1];
+                }
+                return ret;
+            })(),
+            file: (a.pathname.match(/\/([^\/?#]+)$/i) || [, ''])[1],
+            hash: a.hash.replace('#', ''),
+            path: a.pathname.replace(/^([^\/])/, '/$1'),
+            relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [, ''])[1],
+            segments: a.pathname.replace(/^\//, '').split('/')
+        };
+    },
+
+    myBrowser: function () {
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        if (userAgent.indexOf("Opera") > -1) {
+            return "Opera"
+        }
+        if (userAgent.indexOf("Firefox") > -1) {
+            return "FF";
+        }
+        if (userAgent.indexOf("Chrome") > -1) {
+            return "Chrome";
+        }
+        if (userAgent.indexOf("Safari") > -1) {
+            return "Safari";
+        }
+        if (!!window.ActiveXObject || "ActiveXObject" in window) {
+            return "IE";
+        }
+    },
+
+    isIE: function () {
+        return this.myBrowser() === 'IE';
+    },
+
+    evalObj: function (str) {
+        return eval("(" + str + ")");
+    },
+    loadContentFromUrl: function (url, method, callback, noCache) {
+        if (noCache === undefined) noCache = true;
+        var xmlhttp;
+        if (!method) {
+            method = 'GET';
+        }
+        try {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlhttp = new XMLHttpRequest();
+            } catch (e) {
+                return null;
+            }
+        }
+        xmlhttp.open(method, url);
+        if (noCache) {
+            xmlhttp.setRequestHeader('If-Modified-Since', '0');
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState === 4) {
+                if (xmlhttp.status === 200) {
+                    callback(null, xmlhttp.responseText);
+                } else {
+                    callback(xmlhttp.status, xmlhttp.responseText);
+                }
+            }
+        };
+        try {
+            xmlhttp.send(null);
+        } catch (e) {
+            callback(e, '');
+        }
+    },
+    // 交换数组元素
+    arrSwapItems: function (arr, index1, index2) {
+        arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+        return arr;
+    },
+
+    // 上移
+    arrUpRecord: function (arr, $index) {
+        if ($index === 0) {
+            return;
+        }
+        this.arrSwapItems(arr, $index, $index - 1);
+    },
+
+    // 下移
+    arrDownRecord: function (arr, $index) {
+        if ($index === arr.length - 1) {
+            return;
+        }
+        this.arrSwapItems(arr, $index, $index + 1);
+    },
+    inArray: function (array,needle) {
+        for (var i = 0; i < array.length; i++) {
+            if (needle === array[i]) return true;
+        }
+        return false;
+    },
+    template: function () {
+        //字符串模板 template('ab${0}de${1}g','C','F')
+        var num = arguments.length;
+        var oStr = arguments[0];
+        for (var i = 1; i < num; i++) {
+            var pattern = "\\$\\{" + (i - 1) + "\\}";
+            var re = new RegExp(pattern, "g");
+            oStr = oStr.replace(re, arguments[i]);
+        }
+        return oStr;
+    },
 };
 
