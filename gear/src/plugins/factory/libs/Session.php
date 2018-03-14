@@ -17,7 +17,7 @@ class Session implements \ArrayAccess
     public function __construct()
     {
         $path_root_arr = \Yuri2::explodeWithoutNull('/', PATH_ROOT);
-        $this->rootName = array_pop($path_root_arr);
+        $this->rootName = str_replace('.','_', array_pop($path_root_arr));
     }
 
     /**

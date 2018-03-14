@@ -789,8 +789,8 @@ class Yuri2
         if (self::isCached('getOSCoding')) {
             return self::useCache('getOSCoding');
         }
-        $os = self::getOS();
-        $preg = '/windows/i';
+        $os = self::getServerOS();
+        $preg = '/win/i';
         if (preg_match($preg, $os)) {
             $rel = 'GBK';
         } else {
@@ -801,11 +801,11 @@ class Yuri2
     }
 
     /**
-     * 获得操作系统名
+     * 获得客户端操作系统名
      * @return string 操作系统名
      * @author yuri2
      */
-    public static function getOS()
+    public static function getClientOS()
     {
         if (self::isCached('getOS')) {
             return self::useCache('getOs');
@@ -866,6 +866,16 @@ class Yuri2
         }
         self::useCache('getOs', $os);
         return $os;
+    }
+
+    /**
+     * 获得服务器操作系统名
+     * @return string 操作系统名
+     * @author yuri2
+     */
+    public static function getServerOS()
+    {
+        return PHP_OS;
     }
 
     /**
