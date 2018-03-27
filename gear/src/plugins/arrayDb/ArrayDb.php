@@ -9,7 +9,7 @@
 namespace src\plugins\arrayDb;
 
 
-use src\plugins\locker\Locker;
+use src\plugins\factory\libs\Locker;
 
 class ArrayDb
 {

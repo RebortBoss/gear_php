@@ -63,7 +63,6 @@ class Yuri2
     public static function dataToTree($data, $id_name = 'id', $pid_name = 'pid', $children_name = 'children', $root_id = '0', $ergodicFunction = false)
     {
         $data_assoc = [];
-        $max = 50;
         $nodes = [];
         foreach ($data as $item) {
             if (isset($item[$id_name])) {
@@ -77,6 +76,7 @@ class Yuri2
         self::arrGetSet($tree, $root_id, $data_assoc[$root_id]); //添加根节点
         $nodes[$root_id] = [$root_id]; //记录根节点的路径
         while (count($data_assoc) > 0) {
+            $found=false;
             foreach ($data_assoc as $k => $v) {
                 if (isset($nodes[$k])) {
                     continue;
@@ -89,11 +89,12 @@ class Yuri2
                         $path = implode('.' . $children_name . '.', $path_arr);
                         self::arrGetSet($tree, $path, $data_assoc[$k]); //添加子节点
                         unset($data_assoc[$k]); //从列表移除
+                        $found=true;
+//                        break;
                     }
                 }
             }
-            $max--;
-            if ($max < 0) {
+            if(!$found){
                 break;
             }
         }

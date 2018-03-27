@@ -477,10 +477,10 @@ var Yuri2 = {
         if (url.indexOf('&') > 0) {
             rel += '&';
         }
-        rel += name_callback + '=' + encodeURI('Yuri2.jsonp_funcs["' + func_name + '"]');
+        rel += name_callback + '=' + encodeURIComponent('Yuri2.jsonp_funcs["' + func_name + '"]');
         if (data) {
             var data_str = JSON.stringify(data);
-            data_str = encodeURI(data_str);
+            data_str = encodeURIComponent(data_str);
             rel += '&' + name_data + '=' + data_str;
         }
         Yuri2.loadScript(rel, function (script) {
@@ -789,7 +789,7 @@ var Yuri2 = {
         }
         xmlhttp.open(method, url);
         if (noCache) {
-            xmlhttp.setRequestHeader('If-Modified-Since', '0');
+            xmlhttp.setRequestHeader('Cache-Control', 'max-age=0');
         }
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4) {

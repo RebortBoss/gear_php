@@ -172,7 +172,7 @@ Adapter implements Custom
     public static function S($name, $value = '', $options = null)
     {
         $name .= 'dbThink_';
-        if ($options) {
+        if ($value&&$options) {
             $expire = is_array($options) ? $options['expire'] : $options;
             return self::setCache($name,$value,$expire);
         } else {
