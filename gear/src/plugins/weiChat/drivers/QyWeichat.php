@@ -213,7 +213,8 @@ class QyWeichat
 	            elseif ($value === true)
 	            $str .= 'true';
 	            else
-	                $str .= '"' . addslashes ( $value ) . '"'; //All other things
+//	                $str .= '"' . addslashes ( $value ) . '"'; //All other things
+	                $str .= '"' .  ( $value ) . '"'; //All other things //修改此处 不加转义，使a标签得以被识别
 	            // :TODO: Is there any more datatype we should be in the lookout for? (Object?)
 	            $parts [] = $str;
 	        }

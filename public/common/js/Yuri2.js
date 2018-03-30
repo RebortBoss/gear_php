@@ -1,8 +1,7 @@
 /**
  * Created by Yuri2 on 2016/12/9.
+ * Updated on 2018/3/30.
  */
-
-
 
 //原型丰富
 
@@ -843,6 +842,10 @@ var Yuri2 = {
             oStr = oStr.replace(re, arguments[i]);
         }
         return oStr;
+    },
+    strToDate:function(str){
+        var arr = t.time.split(/[- : \/]/);
+        return new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
     },
 };
 
